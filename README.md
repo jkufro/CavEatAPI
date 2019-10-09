@@ -1,24 +1,25 @@
-# README
+# CavEat API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This Rails application is an API made to support the CavEat iOS app.
 
-Things you may want to cover:
+## Requirements
+- Ruby 2.6.5
+- Rails 5.2.3
+- PostgreSQL
 
-* Ruby version
+## Running Development Environment
+```
+bundle install
+rails db:setup
+rails server
+```
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Running Tests
+```
+bundle install
+rubocop
+haml-lint app/views/
+brakeman
+rails db:setup
+rails test
+```
