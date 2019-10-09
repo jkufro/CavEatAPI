@@ -7,9 +7,11 @@ gem 'fast_jsonapi'
 gem 'swagger-docs'
 gem 'pg'
 gem 'cancancan'
-gem "rubocop-rails_config"
-gem 'brakeman'
 gem "haml-rails", "~> 2.0"
+# gems for testing
+gem "rubocop-rails_config", require: false
+gem 'brakeman', require: false
+gem 'haml_lint', require: false
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'

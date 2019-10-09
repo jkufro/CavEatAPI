@@ -5,10 +5,10 @@ jobs:
   include:
     - stage: lint
       before_script:
-        - gem install brakeman rails-erb-lint
+        - gem install brakeman haml-lint
       script:
         - bin/bundle exec rubocop
-        - (cd app/views/ && rails-erb-lint check)
+        - haml-lint app/views/
         - brakeman
     - stage: test
       script:

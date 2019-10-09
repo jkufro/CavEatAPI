@@ -95,6 +95,11 @@ GEM
       haml (>= 4.0.6, < 6.0)
       html2haml (>= 1.0.1)
       railties (>= 5.1)
+    haml_lint (0.34.0)
+      haml (>= 4.0, < 5.2)
+      rainbow
+      rubocop (>= 0.50.0)
+      sysexits (~> 1.1)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
@@ -223,6 +228,7 @@ GEM
     swagger-docs (0.2.9)
       activesupport (>= 3)
       rails (>= 3)
+    sysexits (1.2.0)
     temple (0.8.2)
     thor (0.20.3)
     thread_safe (0.3.6)
@@ -260,6 +266,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   fast_jsonapi
   haml-rails (~> 2.0)
+  haml_lint
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   pg
