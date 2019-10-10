@@ -67,6 +67,8 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'simplecov'
+  gem 'shoulda', '3.6.0'
+  gem "minitest-rails", "~> 3.0"
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
