@@ -1,14 +1,18 @@
 require 'test_helper'
 
 class NutritionFactTest < ActiveSupport::TestCase
-  should belong_to: :food
-  should belong_to: :nutrient
+  context "associations" do
+    should belong_to: :food
+    should belong_to: :nutrient
+  end
 
-  should validate_numericality_of(:amount).is_greater_than_or_equal_to(0)
-  should allow_value(0).for(:amount)
-  should allow_value(1.2345).for(:amount)
-  should_not allow_value(-1).for(:amount)
-  should_not allow_value(-0.0000000001).for(:amount)
+  context 'amount validation' do
+    should validate_numericality_of(:amount).is_greater_than_or_equal_to(0)
+    should allow_value(0).for(:amount)
+    should allow_value(1.2345).for(:amount)
+    should_not allow_value(-1).for(:amount)
+    should_not allow_value(-0.0000000001).for(:amount)
+  end
 
   should 'verify that name is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).name, nutrients(:added_sugars).name
