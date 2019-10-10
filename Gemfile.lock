@@ -278,7 +278,6 @@ DEPENDENCIES
   haml_lint
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
-  minitest
   minitest-rails (~> 3.0)
   pg
   puma (~> 3.11)
