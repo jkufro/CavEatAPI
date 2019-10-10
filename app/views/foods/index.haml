@@ -1,0 +1,8 @@
+%h1 Foods
+
+= render partial: 'foods/actions', locals: { food: @food }
+
+- if @foods.size > 0
+  = render partial: 'foods/table', locals: { foods: @foods }
+- else
+  %h2 No Foods Available

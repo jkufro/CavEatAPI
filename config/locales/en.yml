@@ -30,4 +30,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  foods:
+    update:
+      success: 'Successfully updated food.'
+      failure: 'Could not update food.'
+    destroy:
+      success: 'Successfully destroyed food.'
