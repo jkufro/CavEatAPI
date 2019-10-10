@@ -1,11 +1,13 @@
 language: ruby
 rvm:
   - 2.6.5
+services:
+  - postgresql
 jobs:
   include:
     - stage: lint
       before_script:
-        - gem install brakeman haml-lint
+        - gem install brakeman haml-lint rubocop-rails_config
       script:
         - bin/bundle exec rubocop
         - haml-lint app/views/
