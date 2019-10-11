@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+food_one:
   upc: 1234567890
-  name: MyString
+  name: food_one
 
-two:
+food_two:
   upc: 9876543210
-  name: MyString
+  name: food_two

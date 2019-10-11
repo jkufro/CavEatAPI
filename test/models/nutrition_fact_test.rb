@@ -6,6 +6,10 @@ class NutritionFactTest < ActiveSupport::TestCase
     should belong_to: :nutrient
   end
 
+  context 'basic validations' do
+    should validate_uniqueness_of(:nutrient_id).scoped_to(:food_id)
+  end
+
   context 'amount validation' do
     should validate_numericality_of(:amount).is_greater_than_or_equal_to(0)
     should allow_value(0).for(:amount)
