@@ -40,6 +40,7 @@ module Api
 
         def set_food_strings
           pms = show_by_strings_params
+          return unless pms[:nutrition_facts] && pms[:ingredients] && pms[:nutrition_facts].is_a?(String) && pms[:ingredients].is_a?(String)
           @food = FoodService.food_from_strings(pms[:upc], pms[:nutrition_facts], pms[:ingredients])
         end
     end
