@@ -3,3 +3,5 @@
 = render partial: 'ingredients/actions', locals: { ingredient: @ingredient }
 
 = render partial: 'ingredients/table', locals: { ingredients: @ingredients }
+
+= will_paginate @ingredients
