@@ -1,0 +1,19 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "",
+  "apis": [
+    {
+      "path": "/api/v1/foods.{format}",
+      "description": "Foods Retrieval"
+    }
+  ],
+  "authorizations": null,
+  "info": {
+    "title": "CavEat API Swagger Documentation",
+    "description": "This is the official documentation for the CavEat API.",
+    "contact": "jkufro@andrew.cmu.edu",
+    "license": "Apache 2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }
+}
