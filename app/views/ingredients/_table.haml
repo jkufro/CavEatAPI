@@ -8,14 +8,15 @@
         %th Warning?
     %tbody
       - ingredients.each do |ingredient|
-        %td
-          = ingredient.id
-        %td
-          = link_to ingredient.name, ingredient_path(ingredient)
-        %td
-          = ingredient.desription
-        %td
-          = ingredient.is_warning ? 'Yes' : 'No'
+        %tr
+          %td
+            = ingredient.id
+          %td
+            = link_to ingredient.name, ingredient_path(ingredient)
+          %td
+            = ingredient.desription
+          %td
+            = ingredient.is_warning ? 'Yes' : 'No'
 - else
   %p.lead No Ingredients Available
 

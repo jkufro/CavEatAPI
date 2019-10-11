@@ -6,4 +6,18 @@
 .row
   .col
     %h2 Attributes
-
+    %p.lead
+      %strong ID:
+      = @nutrient.id
+    %p.lead
+      %strong Name:
+      = @nutrient.name
+    %p.lead
+      %strong Unit:
+      = @nutrient.unit
+    %p.lead
+      %strong Description:
+      = @nutrient.description || 'N/A'
+    %p.lead
+      %strong Limiting?:
+      = @nutrient.is_limiting ? 'Yes' : 'No'
