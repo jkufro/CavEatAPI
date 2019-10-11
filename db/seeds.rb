@@ -9,16 +9,27 @@
 require 'csv'
 require 'set'
 
+nutrient_file_path = 'lib/data/trimmed/nutrient.csv'
+branded_food_file_path = 'lib/data/trimmed/branded_food.csv'
+food_file_path = 'lib/data/trimmed/food.csv'
+food_nutrient_file_path = 'lib/data/trimmed/food_nutrient.csv'
 
-def load_nutrients
-  file_path = 'lib/data/nutrient.csv'
+if Rails.env == 'production'
+  nutrient_file_path = 'lib/data/full/nutrient.csv'
+  branded_food_file_path = 'lib/data/full/branded_food.csv'
+  food_file_path = 'lib/data/full/food.csv'
+  food_nutrient_file_path = 'lib/data/full/food_nutrient.csv'
+end
+
+
+def load_nutrients(nutrient_file_path)
   id_col = 0
   name_col = 1
   unit_col = 2
 
-  puts "Reading #{file_path} as CSV..."
-  nutrient_table = CSV.parse(File.read(file_path), headers: true)
-  puts "Read in #{file_path.size} rows.\n"
+  puts "Reading #{nutrient_file_path} as CSV..."
+  nutrient_table = CSV.parse(File.read(nutrient_file_path), headers: true)
+  puts "Read in #{nutrient_file_path.size} rows.\n"
 
   # Find unique ingredients
   puts 'Adding Nutrients to database...'
@@ -38,15 +49,14 @@ def load_nutrients
 end
 
 
-def load_foods
-  file_path = 'lib/data/branded_food.csv'
+def load_foods(branded_food_file_path)
   id_col = 0
   upc_col = 2
   ingredients_col = 3
 
-  puts "Reading #{file_path} as CSV..."
-  branded_food_table = CSV.parse(File.read(file_path), headers: true)
-  puts "Read in #{file_path.size} rows.\n"
+  puts "Reading #{branded_food_file_path} as CSV..."
+  branded_food_table = CSV.parse(File.read(branded_food_file_path), headers: true)
+  puts "Read in #{branded_food_file_path.size} rows.\n"
 
   # Find unique ingredients
   puts 'Adding Foods to database...'
@@ -113,37 +123,30 @@ def create_ingredient_and_add_to_food(food, ingredient_string)
 end
 
 
-def update_food_names
-  file_path = 'lib/data/food.csv'
+def update_food_names(food_file_path)
   id_col = 0
   name_col = 2
 
-  puts "Reading #{file_path} as CSV..."
-  food_table = CSV.parse(File.read(file_path), headers: true)
-  puts "Read in #{file_path.size} rows.\n"
+  puts "Reading #{food_file_path} as CSV..."
+  food_table = CSV.parse(File.read(food_file_path), headers: true)
+  puts "Read in #{food_file_path.size} rows.\n"
 
   puts 'Updating Food names in database...'
   food_table.each do |row|
-    Food.where(id: row[id_col]).update(name: row[name_col])
-    # food = Food.find_by_id(row[id_col])
-    # if food
-    #   food.name = row[name_col]
-    #   food.save
-    # end
+    Food.where(id: row[id_col]).update(name: row[name_col].capitalize)
   end
   puts 'Done updating food names.'
 end
 
-def load_nutrition_facts
-  file_path = 'lib/data/food_nutrient.csv'
+def load_nutrition_facts(food_nutrient_file_path)
   id_col = 0
   food_id_col = 1
   nutrient_id_col = 2
   amount_col = 3
 
-  puts "Reading #{file_path} as CSV..."
-  food_nutrients_table = CSV.parse(File.read(file_path), headers: true)
-  puts "Read in #{file_path.size} rows.\n"
+  puts "Reading #{food_nutrient_file_path} as CSV..."
+  food_nutrients_table = CSV.parse(File.read(food_nutrient_file_path), headers: true)
+  puts "Read in #{food_nutrient_file_path.size} rows.\n"
 
   # Find unique ingredients
   puts 'Adding NutritionFacts to database...'
@@ -160,7 +163,7 @@ def load_nutrition_facts
 end
 
 
-load_nutrients()
-load_foods()
-load_nutrition_facts()
-update_food_names()
+load_nutrients(nutrient_file_path)
+load_foods(branded_food_file_path)
+load_nutrition_facts(food_nutrient_file_path)
+update_food_names(food_file_path)
