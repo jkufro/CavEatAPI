@@ -1,0 +1,25 @@
+- if nutrients && nutrients.size > 0
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th Name
+        %th Description
+        %th Unit
+        %th Limiting?
+    %tbody
+      - nutrients.each do |nutrient|
+        %td
+          = nutrient.id
+        %td
+          = link_to nutrient.name, nutrient_path(nutrient)
+        %td
+          = nutrient.desription
+        %td
+          = nutrient.unit
+        %td
+          = nutrient.is_limiting ? 'Yes' : 'No'
+- else
+  %p.lead No Nutrients Available
+
+

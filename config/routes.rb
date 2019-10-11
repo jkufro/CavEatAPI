@@ -4,6 +4,6 @@ Rails.application.routes.draw do
 
   resources :foods, only: [:index, :show, :update, :edit, :destroy]
   resources :ingredients, only: [:index, :show, :update, :edit, :destroy]
-  resources :nutrients, only: [:index]
+  resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users, only: [:index]
 end

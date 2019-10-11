@@ -1,0 +1,7 @@
+.row
+  .col
+    = link_to 'All Nutrients', :nutrients, class: 'btn btn-primary'
+    - if nutrient
+      = link_to 'Show Nutrient', nutrient_path(nutrient), class: 'btn btn-info'
+      = link_to 'Edit Nutrient', edit_nutrient_path(nutrient), class: 'btn btn-secondary'
+      = link_to 'Destroy Nutrient', nutrient_path(nutrient), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" }

@@ -1,0 +1,25 @@
+- if nutrition_facts && nutrition_facts.size > 0
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th Name
+        %th Description
+        %th Amount
+        %th Limiting?
+    %tbody
+      - nutrition_facts.each do |nutrition_fact|
+        %td
+          = nutrition_fact.id
+        %td
+          = nutrition_fact.name
+        %td
+          = nutrition_fact.desription
+        %td
+          = nutrition_fact.amount + nutrition_fact.unit
+        %td
+          = nutrition_fact.is_limiting ? 'Yes' : 'No'
+- else
+  %p.lead No Nutrition Facts Available
+
+
