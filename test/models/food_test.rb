@@ -18,15 +18,15 @@ class FoodTest < ActiveSupport::TestCase
     should_not allow_value(-0.0000000001).for(:upc)
   end
 
-  context 'search' do
+  context 'scopes' do
     should 'show that search by upc works' do
-      search = Food.all.search('1234567890')
+      search = Food.all.search(foods(:food_one).upc.to_s)
       assert_equal 1, search.size
-      assert_equal 1234567890, search.first.upc
+      assert_equal foods(:food_one).upc, search.first.upc
 
-      search = Food.all.search('9876543210')
+      search = Food.all.search(foods(:food_two).upc.to_s)
       assert_equal 1, search.size
-      assert_equal 9876543210, search.first.upc
+      assert_equal foods(:food_two).upc, search.first.upc
     end
 
     should 'show that search by name works' do
@@ -36,13 +36,13 @@ class FoodTest < ActiveSupport::TestCase
       search = Food.all.search('food')
       assert_equal 2, search.size
 
-      search = Food.all.search('food_one')
+      search = Food.all.search(foods(:food_one).name)
       assert_equal 1, search.size
-      assert_equal 1234567890, search.first.upc
+      assert_equal foods(:food_one).upc, search.first.upc
 
-      search = Food.all.search('food_two')
+      search = Food.all.search(foods(:food_two).name)
       assert_equal 1, search.size
-      assert_equal 9876543210, search.first.upc
+      assert_equal foods(:food_two).upc, search.first.upc
     end
   end
 end
