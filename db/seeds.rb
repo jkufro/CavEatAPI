@@ -6,6 +6,9 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# !!! investigate speed improvement
+#       https://dalibornasevic.com/posts/68-processing-large-csv-files-with-ruby
+
 require 'csv'
 require 'set'
 
@@ -83,7 +86,7 @@ def add_ingredients_from_string(food, product_ingredients)
       ingredient.chop! while ingredient.end_with?('*')
       ingredient.sub!('*', '') while ingredient.start_with?('*')
       ingredient.strip!
-      ingredient.capitalize!
+      ingredient = ingredient.titleize
       create_ingredient_and_add_to_food(food, ingredient)
       ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
       next
@@ -133,7 +136,7 @@ def update_food_names(food_file_path)
 
   puts 'Updating Food names in database...'
   food_table.each do |row|
-    Food.where(id: row[id_col]).update(name: row[name_col].capitalize)
+    Food.where(id: row[id_col]).update(name: row[name_col].titleize)
   end
   puts 'Done updating food names.'
 end
