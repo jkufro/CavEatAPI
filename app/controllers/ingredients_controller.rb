@@ -34,6 +34,6 @@ class IngredientsController < ApplicationController
     end
 
     def ingredient_params
-      params.require(:ingredient).permit(:name, :description, :is_warning)
+      params.require(:ingredient).permit(:name, :composition, :description, :is_warning)
     end
 end

@@ -105,18 +105,19 @@ end
 
 
 def create_ingredient_and_add_to_food(food, ingredient_string)
-  # split up the name and description based on first (, {, or [
+  # split up the name and composition based on first (, {, or [
   split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
   ingredient_name = split_index ? ingredient_string.slice(0, split_index) : ingredient_string
-  ingredient_description = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
+  ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
   ingredient = Ingredient.new(
     name: ingredient_name,
-    description: ingredient_description,
+    composition: ingredient_composition,
+    description: '',
     is_warning: false
   )
   unless ingredient.save
-    ingredient = Ingredient.by_name(ingredient_name).by_description(ingredient_description).first
+    ingredient = Ingredient.by_name(ingredient_name).by_composition(ingredient_composition).first
     return unless ingredient
   end
 

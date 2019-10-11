@@ -2,10 +2,12 @@
 
 ingredient_one:
   name: Ingredient One
-  description: '(Description For Ingredient One.)'
+  composition: '(Description For Ingredient One.)'
+  description: ''
   is_warning: true
 
 ingredient_two:
   name: Ingredient Two
-  description: '[Description For Ingredient Two.]'
+  composition: '[Description For Ingredient Two.]'
+  description: ''
   is_warning: false

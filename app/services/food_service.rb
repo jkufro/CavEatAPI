@@ -15,7 +15,7 @@ class FoodService
     found_ingredients = []
 
     tentative_ingredients.each do |tentative_ingredient|
-      ingredient = Ingredient.by_name(tentative_ingredient.name).by_description(tentative_ingredient.description).first
+      ingredient = Ingredient.by_name(tentative_ingredient.name).by_composition(tentative_ingredient.composition).first
       next unless ingredient
       found_ingredients << ingredient
     end
@@ -60,14 +60,14 @@ class FoodService
     end
 
     def self.build_ingredient_from_string(ingredient_string)
-      # split up the name and description based on first (, {, or [
+      # split up the name and composition based on first (, {, or [
       split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
       ingredient_name = split_index ? ingredient_string.slice(0, split_index) : ingredient_string
-      ingredient_description = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
+      ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
       return Ingredient.new(
         name: ingredient_name.strip,
-        description: ingredient_description.strip,
+        composition: ingredient_composition.strip,
         is_warning: false
       )
     end

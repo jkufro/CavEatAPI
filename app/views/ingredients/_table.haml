@@ -4,6 +4,7 @@
       %tr
         %th ID
         %th Name
+        %th Compoosition
         %th Description
         %th Warning?
     %tbody
@@ -13,6 +14,8 @@
             = ingredient.id
           %td
             = link_to ingredient.name, ingredient_path(ingredient)
+          %td
+            = ingredient.composition
           %td
             = ingredient.description
           %td

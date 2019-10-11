@@ -17,12 +17,12 @@ class IngredientsControllerTest < ActionDispatch::IntegrationTest
   end
 
   should 'successfully edit' do
-    patch ingredient_path(ingredients(:ingredient_one).id), params: { ingredient: { name: "New Name", description: '', is_warning: false } }
+    patch ingredient_path(ingredients(:ingredient_one).id), params: { ingredient: { name: "New Name", composition: '', description: '', is_warning: false } }
     assert_redirected_to ingredient_path(ingredients(:ingredient_one).id)
   end
 
   should 'fail edit' do
-    patch ingredient_path(ingredients(:ingredient_one).id), params: { ingredient: { name: nil, description: '', is_warning: false } }
+    patch ingredient_path(ingredients(:ingredient_one).id), params: { ingredient: { name: nil, composition: '', description: '', is_warning: false } }
     assert_template :edit
   end
 

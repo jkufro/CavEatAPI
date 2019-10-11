@@ -7,7 +7,7 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   context 'basic validations' do
-    should validate_uniqueness_of(:name).scoped_to(:description)
+    should validate_uniqueness_of(:name).scoped_to(:composition)
     should validate_presence_of(:name)
     should validate_length_of(:name).is_at_least(1)
   end
@@ -29,18 +29,18 @@ class IngredientTest < ActiveSupport::TestCase
       assert_equal ingredients(:ingredient_two).name, result.first.name
     end
 
-    should 'show that description scope works' do
-      result = Ingredient.by_description('no food with this description')
+    should 'show that composition scope works' do
+      result = Ingredient.by_composition('no food with this composition')
       assert_equal 0, result.size
 
-      result = Ingredient.by_description('Description for ')
+      result = Ingredient.by_composition('Description for ')
       assert_equal 0, result.size
 
-      result = Ingredient.by_description(ingredients(:ingredient_one).description)
+      result = Ingredient.by_composition(ingredients(:ingredient_one).composition)
       assert_equal 1, result.size
       assert_equal ingredients(:ingredient_one).name, result.first.name
 
-      result = Ingredient.by_description(ingredients(:ingredient_two).description)
+      result = Ingredient.by_composition(ingredients(:ingredient_two).composition)
       assert_equal 1, result.size
       assert_equal ingredients(:ingredient_two).name, result.first.name
     end
@@ -64,20 +64,20 @@ class IngredientTest < ActiveSupport::TestCase
       assert_equal ingredients(:ingredient_two).name, search.first.name
     end
 
-    should 'show that search by description works' do
+    should 'show that search by composition works' do
       search = Ingredient.all.search('')
       assert_equal 2, search.size
 
       search = Ingredient.all.search('Description for ')
       assert_equal 2, search.size
 
-      search = Ingredient.all.search(ingredients(:ingredient_one).description)
+      search = Ingredient.all.search(ingredients(:ingredient_one).composition)
       assert_equal 1, search.size
-      assert_equal ingredients(:ingredient_one).description, search.first.description
+      assert_equal ingredients(:ingredient_one).composition, search.first.composition
 
-      search = Ingredient.all.search(ingredients(:ingredient_two).description)
+      search = Ingredient.all.search(ingredients(:ingredient_two).composition)
       assert_equal 1, search.size
-      assert_equal ingredients(:ingredient_two).description, search.first.description
+      assert_equal ingredients(:ingredient_two).composition, search.first.composition
     end
   end
 end

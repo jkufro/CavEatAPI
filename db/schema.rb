@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_10_215233) do
+ActiveRecord::Schema.define(version: 2019_10_11_145243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2019_10_10_215233) do
     t.boolean "is_warning"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "composition"
   end
 
   create_table "nutrients", force: :cascade do |t|
