@@ -17,4 +17,32 @@ class FoodTest < ActiveSupport::TestCase
     should_not allow_value(-1).for(:upc)
     should_not allow_value(-0.0000000001).for(:upc)
   end
+
+  context 'search' do
+    should 'show that search by upc works' do
+      search = Food.all.search('1234567890')
+      assert_equal 1, search.size
+      assert_equal 1234567890, search.first.upc
+
+      search = Food.all.search('9876543210')
+      assert_equal 1, search.size
+      assert_equal 9876543210, search.first.upc
+    end
+
+    should 'show that search by name works' do
+      search = Food.all.search('')
+      assert_equal 2, search.size
+
+      search = Food.all.search('food')
+      assert_equal 2, search.size
+
+      search = Food.all.search('food_one')
+      assert_equal 1, search.size
+      assert_equal 1234567890, search.first.upc
+
+      search = Food.all.search('food_two')
+      assert_equal 1, search.size
+      assert_equal 9876543210, search.first.upc
+    end
+  end
 end
