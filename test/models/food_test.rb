@@ -31,6 +31,9 @@ class FoodTest < ActiveSupport::TestCase
     end
 
     should 'show that search by name works' do
+      search = Food.all.search(nil)
+      assert_equal 2, search.size
+
       search = Food.all.search('')
       assert_equal 2, search.size
 

@@ -46,6 +46,9 @@ class IngredientTest < ActiveSupport::TestCase
     end
 
     should 'show that search by name works' do
+      search = Ingredient.all.search(nil)
+      assert_equal 2, search.size
+
       search = Ingredient.all.search('')
       assert_equal 2, search.size
 

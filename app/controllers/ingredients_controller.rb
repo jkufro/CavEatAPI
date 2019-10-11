@@ -2,7 +2,7 @@ class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
 
   def index
-    @ingredients = Ingredient.all.paginate(page: params[:page], per_page: 100)
+    @ingredients = Ingredient.all.search(params[:search]).paginate(page: params[:page], per_page: 100)
   end
 
   def show

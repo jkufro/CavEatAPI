@@ -2,6 +2,8 @@
 
 = render partial: 'foods/actions', locals: { food: @food }
 
+= render partial: 'partials/search'
+
 = render partial: 'foods/table', locals: { foods: @foods }
 
 = will_paginate @foods, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

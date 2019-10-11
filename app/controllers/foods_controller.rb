@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
 
   def index
-    @foods = Food.all.paginate(page: params[:page], per_page: 100)
+    @foods = Food.all.search(params[:search]).paginate(page: params[:page], per_page: 100)
   end
 
   def show
