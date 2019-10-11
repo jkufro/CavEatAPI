@@ -9,6 +9,7 @@
 require 'csv'
 require 'set'
 
+
 def load_nutrients
   file_path = 'lib/data/nutrient.csv'
   id_col = 0
@@ -36,4 +37,130 @@ def load_nutrients
   puts 'Done adding Nutrients.'
 end
 
+
+def load_foods
+  file_path = 'lib/data/branded_food.csv'
+  id_col = 0
+  upc_col = 2
+  ingredients_col = 3
+
+  puts "Reading #{file_path} as CSV..."
+  branded_food_table = CSV.parse(File.read(file_path), headers: true)
+  puts "Read in #{file_path.size} rows.\n"
+
+  # Find unique ingredients
+  puts 'Adding Foods to database...'
+  branded_food_table.each do |row|
+    food = Food.new(
+      id: row[id_col],
+      upc: row[upc_col],
+      name: 'Unnamed Food'
+    )
+    add_ingredients_from_string(food, row[ingredients_col]) if food.save
+  end
+  puts 'Done adding Foods.'
+end
+
+
+def add_ingredients_from_string(food, product_ingredients)
+  # remove trailing '.' if exists
+  product_ingredients.chop! if product_ingredients.end_with?('.')
+
+  ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
+  product_ingredients.split('').each do |c|
+    if ingredient.size > 0 && open_paren == close_paren && open_square == close_square && open_curly == close_curly && c == ','
+      ingredient.strip!
+      ingredient.chop! while ingredient.end_with?('*')
+      ingredient.sub!('*', '') while ingredient.start_with?('*')
+      ingredient.strip!
+      ingredient.capitalize!
+      create_ingredient_and_add_to_food(food, ingredient)
+      ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
+      next
+    end
+    open_paren += 1 if c == '('
+    close_paren += 1 if c == ')'
+    open_square += 1 if c == '['
+    close_square += 1 if c == ']'
+    open_curly += 1 if c == '{'
+    close_curly += 1 if c == '}'
+    ingredient += c
+  end
+end
+
+
+def create_ingredient_and_add_to_food(food, ingredient_string)
+  # split up the name and description based on first (, {, or [
+  split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
+  ingredient_name = split_index ? ingredient_string.slice(0, split_index) : ingredient_string
+  ingredient_description = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
+
+  ingredient = Ingredient.new(
+    name: ingredient_name,
+    description: ingredient_description,
+    is_warning: false
+  )
+  unless ingredient.save
+    ingredient = Ingredient.by_name(ingredient_name).by_description(ingredient_description).first
+    return unless ingredient
+  end
+
+  food_ingredient = FoodIngredient.new(
+    food_id: food.id,
+    ingredient_id: ingredient.id
+  )
+  food_ingredient.save
+end
+
+
+def update_food_names
+  file_path = 'lib/data/food.csv'
+  id_col = 0
+  name_col = 2
+
+  puts "Reading #{file_path} as CSV..."
+  food_table = CSV.parse(File.read(file_path), headers: true)
+  puts "Read in #{file_path.size} rows.\n"
+
+  puts 'Updating Food names in database...'
+  food_table.each do |row|
+    Food.where(id: row[id_col]).update(name: row[name_col])
+    # food = Food.find_by_id(row[id_col])
+    # if food
+    #   food.name = row[name_col]
+    #   food.save
+    # end
+  end
+  puts 'Done updating food names.'
+end
+
+def load_nutrition_facts
+  file_path = 'lib/data/food_nutrient.csv'
+  id_col = 0
+  food_id_col = 1
+  nutrient_id_col = 2
+  amount_col = 3
+
+  puts "Reading #{file_path} as CSV..."
+  food_nutrients_table = CSV.parse(File.read(file_path), headers: true)
+  puts "Read in #{file_path.size} rows.\n"
+
+  # Find unique ingredients
+  puts 'Adding NutritionFacts to database...'
+  food_nutrients_table.each do |row|
+    nutrition_fact = NutritionFact.new(
+      id: row[id_col],
+      food_id: row[food_id_col],
+      nutrient_id: row[nutrient_id_col],
+      amount: row[amount_col],
+    )
+    nutrition_fact.save if nutrition_fact.valid?
+  end
+  puts 'Done adding NutritionFacts.'
+end
+
+
 load_nutrients()
+load_foods()
+load_nutrition_facts()
+update_food_names()
