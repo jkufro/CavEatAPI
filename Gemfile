@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
+gem 'barby', require: %w(barby barby/barcode/code_128 barby/outputter/html_outputter)
 gem 'simple_form'
 gem 'jquery-rails'
 gem 'bootstrap', '~> 4.3.1'
