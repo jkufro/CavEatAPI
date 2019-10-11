@@ -13,7 +13,7 @@ class IngredientsController < ApplicationController
 
   def update
     if @ingredient.update_attributes(ingredient_params)
-      flash[:notice] = I18n.t('ingredients.update.success')
+      flash[:success] = I18n.t('ingredients.update.success')
       redirect_to ingredient_path(@ingredient)
     else
       # return to the 'new' form
@@ -34,6 +34,6 @@ class IngredientsController < ApplicationController
     end
 
     def ingredient_params
-      params.require(:ingredient).permit(:upc, :name)
+      params.require(:ingredient).permit(:name, :description, :is_warning)
     end
 end

@@ -6,4 +6,15 @@
 .row
   .col
     %h2 Attributes
-
+    %p.lead
+      %strong ID:
+      = @ingredient.id
+    %p.lead
+      %strong Name:
+      = @ingredient.name
+    %p.lead
+      %strong Description:
+      = @ingredient.description
+    %p.lead
+      %strong Warning?:
+      = @ingredient.is_warning ? 'Yes' : 'No'

@@ -13,7 +13,7 @@ class NutrientsController < ApplicationController
 
   def update
     if @nutrient.update_attributes(nutrient_params)
-      flash[:notice] = I18n.t('nutrients.update.success')
+      flash[:success] = I18n.t('nutrients.update.success')
       redirect_to nutrient_path(@nutrient)
     else
       # return to the 'new' form
@@ -34,6 +34,6 @@ class NutrientsController < ApplicationController
     end
 
     def nutrient_params
-      params.require(:nutrient).permit(:upc, :name)
+      params.require(:nutrient).permit(:name, :description, :unit, :is_limiting)
     end
 end

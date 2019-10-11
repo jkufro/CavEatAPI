@@ -13,7 +13,7 @@ class FoodsController < ApplicationController
 
   def update
     if @food.update_attributes(food_params)
-      flash[:notice] = I18n.t('foods.update.success')
+      flash[:success] = I18n.t('foods.update.success')
       redirect_to food_path(@food)
     else
       # return to the 'new' form

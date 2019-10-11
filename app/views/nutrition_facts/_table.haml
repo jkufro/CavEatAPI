@@ -17,7 +17,7 @@
           %td
             = nutrition_fact.description
           %td
-            = "#{nutrition_fact.amount}#{nutrition_fact.unit}"
+            = nutrition_fact.amount.to_s + nutrition_fact.unit
           %td
             = nutrition_fact.is_limiting ? 'Yes' : 'No'
 - else

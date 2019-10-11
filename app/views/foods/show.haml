@@ -7,6 +7,9 @@
   .col
     %h2 Attributes
     %p.lead
+      %strong ID:
+      = @food.id
+    %p.lead
       %strong UPC:
       = @food.upc
       = html_upc(@food)

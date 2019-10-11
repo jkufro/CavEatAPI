@@ -1,5 +1,7 @@
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start 'rails' do
+  add_filter "lib/data/data_trimmer.rb"
+end
 
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

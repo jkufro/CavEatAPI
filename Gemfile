@@ -75,6 +75,7 @@ group :test do
   gem 'simplecov'
   gem 'shoulda', '3.6.0'
   gem "minitest-rails", "~> 3.0"
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

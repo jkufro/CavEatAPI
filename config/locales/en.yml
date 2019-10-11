@@ -42,3 +42,9 @@ en:
       failure: 'Could not update nutrient.'
     destroy:
       success: 'Successfully destroyed nutrient.'
+  ingredients:
+    update:
+      success: 'Successfully updated ingredient.'
+      failure: 'Could not update ingredient.'
+    destroy:
+      success: 'Successfully destroyed ingredient.'

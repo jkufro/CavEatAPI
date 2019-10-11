@@ -9,6 +9,7 @@ class FoodTest < ActiveSupport::TestCase
 
   context 'upc validation' do
     should validate_uniqueness_of(:upc)
+    should validate_presence_of(:upc)
 
     should validate_numericality_of(:upc).only_integer.is_greater_than_or_equal_to(0)
     should allow_value(0).for(:upc)

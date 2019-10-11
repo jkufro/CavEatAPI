@@ -3,6 +3,8 @@ class Ingredient < ApplicationRecord
   has_many :foods, through: :food_ingredients
 
   validates_uniqueness_of :name, scope: :description
+  validates_presence_of :name
+  validates_length_of :name, minimum: 1, allow_blank: false
 
   scope :by_name, ->(name) {
     where(name: name)
