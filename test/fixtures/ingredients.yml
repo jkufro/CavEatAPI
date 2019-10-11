@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 ingredient_one:
-  name: ingredient_one
-  description: 'Description for ingredient_one.'
+  name: Ingredient One
+  description: '(Description For Ingredient One.)'
   is_warning: true
 
 ingredient_two:
-  name: ingredient_two
-  description: 'Description for ingredient_two.'
+  name: Ingredient Two
+  description: '[Description For Ingredient Two.]'
   is_warning: false

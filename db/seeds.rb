@@ -99,6 +99,8 @@ def add_ingredients_from_string(food, product_ingredients)
     close_curly += 1 if c == '}'
     ingredient += c
   end
+
+  create_ingredient_and_add_to_food(food, ingredient)
 end
 
 
