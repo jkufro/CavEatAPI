@@ -48,3 +48,7 @@ en:
       failure: 'Could not update ingredient.'
     destroy:
       success: 'Successfully destroyed ingredient.'
+  api:
+    vi:
+      foods:
+        not_found: 'Food not found.'

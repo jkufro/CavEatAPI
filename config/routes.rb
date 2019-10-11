@@ -6,4 +6,11 @@ Rails.application.routes.draw do
   resources :ingredients, only: [:index, :show, :update, :edit, :destroy]
   resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users, only: [:index]
+
+  namespace :api do
+    namespace :v1 do
+      post :upc, to: 'foods#show_by_upc'
+      post :strings, to: 'foods#show_by_strings'
+    end
+  end
 end
