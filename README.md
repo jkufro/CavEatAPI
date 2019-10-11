@@ -3,6 +3,7 @@
 This Rails application is an API made to support the CavEat iOS app.
 
 ## Requirements
+- [git lfs](https://git-lfs.github.com/)
 - Ruby 2.6.5
 - Rails 5.2.3
 - PostgreSQL
