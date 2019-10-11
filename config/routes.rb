@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root :to => 'foods#index', as: :home
 
   resources :foods, only: [:index, :show, :update, :edit, :destroy]
-  resources :ingredients, only: [:index]
+  resources :ingredients, only: [:index, :show, :update, :edit, :destroy]
   resources :nutrients, only: [:index]
   resources :users, only: [:index]
 end

@@ -1,14 +1,19 @@
-%table.table
-  %thead
-    %tr
-      %th ID
-      %th UPC
-      %th Name
-  %tbody
-    - foods.each do |food|
-      %td
-        = food.id
-      %td
-        = link_to food.upc, food_path(food)
-      %td
-        = food.name
+- if foods && foods.size > 0
+  %table.table
+    %thead
+      %tr
+        %th ID
+        %th UPC
+        %th Name
+    %tbody
+      - foods.each do |food|
+        %td
+          = food.id
+        %td
+          = link_to food.upc, food_path(food)
+        %td
+          = food.name
+- else
+  %p.lead No Foods Available
+
+
