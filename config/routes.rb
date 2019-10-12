@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  get 'login', to: 'sessions#new', as: :login
+  get 'logout', to: 'sessions#destroy', as: :logout
 
   namespace :api do
     namespace :v1 do

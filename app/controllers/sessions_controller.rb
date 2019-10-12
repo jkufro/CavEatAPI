@@ -21,6 +21,6 @@ class SessionsController < ApplicationController
   # Controller method to destroy a session.
   def destroy
     session[:user_id] = nil
-    redirect_to home_path, notice: I18n.t('sessions.destroy.success')
+    redirect_to new_session_path, notice: I18n.t('sessions.destroy.success')
   end
 end

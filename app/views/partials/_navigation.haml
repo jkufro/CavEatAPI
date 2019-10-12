@@ -10,5 +10,6 @@
         = nav_link('Nutrients', :nutrients)
         = nav_link('Users', :users)
         = nav_link('API', :swagger_ui_engine)
+        = nav_link('Logout', :logout)
       - else
-        = nav_link('Login', new_session_path)
+        = nav_link('Login', :login)
