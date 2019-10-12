@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :ingredients, only: [:index, :show, :update, :edit, :destroy]
   resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users
+  resources :sessions, only: [:new, :create, :destroy]
 
   namespace :api do
     namespace :v1 do

@@ -4,8 +4,11 @@
     %span.navbar-toggler-icon
   .collapse.navbar-collapse#navbarNav
     %ul.navbar-nav
-      = nav_link('Foods', :foods)
-      = nav_link('Ingredients', :ingredients)
-      = nav_link('Nutrients', :nutrients)
-      = nav_link('Users', :users)
-      = nav_link('API', :swagger_ui_engine)
+      - if current_user
+        = nav_link('Foods', :foods)
+        = nav_link('Ingredients', :ingredients)
+        = nav_link('Nutrients', :nutrients)
+        = nav_link('Users', :users)
+        = nav_link('API', :swagger_ui_engine)
+      - else
+        = nav_link('Login', new_session_path)

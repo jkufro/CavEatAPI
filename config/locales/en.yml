@@ -57,6 +57,12 @@ en:
       failure: 'Could not update user.'
     destroy:
       success: 'Successfully destroyed user.'
+  sessions:
+    create:
+      success: 'Logged in!'
+      failure: 'Username and/or password is invalid'
+    destroy:
+      success: 'Logged out!'
   api:
     vi:
       foods:
