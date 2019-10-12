@@ -1,4 +1,4 @@
 class NutritionFactSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :description, :amount, :unit
+  attributes :name, :description, :source, :amount, :unit
 end

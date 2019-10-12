@@ -28,6 +28,11 @@ class NutritionFactTest < ActiveSupport::TestCase
     assert_equal nutrition_facts(:food_one_protien).description, nutrients(:protien).description
   end
 
+  should 'verify that source is accessible' do
+    assert_equal nutrition_facts(:food_one_added_sugars).source, nutrients(:added_sugars).source
+    assert_nil nutrition_facts(:food_one_protien).source
+  end
+
   should 'verify that unit is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).unit, nutrients(:added_sugars).unit
     assert_equal nutrition_facts(:food_one_protien).unit, nutrients(:protien).unit

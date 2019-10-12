@@ -1,4 +1,4 @@
 class IngredientSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :composition, :description, :is_warning
+  attributes :name, :composition, :description, :source, :is_warning
 end
