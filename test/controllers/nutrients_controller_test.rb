@@ -1,6 +1,14 @@
 require 'test_helper'
 
 class NutrientsControllerTest < ActionDispatch::IntegrationTest
+  setup do
+    login_user_one
+  end
+
+  teardown do
+    logout
+  end
+
   should 'get index' do
     get nutrients_path
     assert_response :success

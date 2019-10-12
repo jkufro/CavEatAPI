@@ -39,6 +39,10 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
   def login_user_one
     get login_path
-    post sessions_path, params: { email: users(:user_one).username, password: "secret" }
+    post sessions_path, params: { username: users(:user_one).username, password: "secret" }
+  end
+
+  def logout
+    get logout_path
   end
 end

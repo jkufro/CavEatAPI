@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :authentication_required!, only: [:new, :create]
   # Controller method to create a new instance of the SessionsController
   def new
     @username = ''

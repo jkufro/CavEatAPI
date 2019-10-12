@@ -12,6 +12,14 @@
 require 'csv'
 require 'set'
 
+
+User.create(username: 'gronen', password: 'secret')
+User.create(username: 'jkufro', password: 'secret')
+User.create(username: 'johnkimdy', password: 'secret')
+User.create(username: 'profh', password: 'secret')
+User.create(username: 'SweetDweems', password: 'secret')
+
+
 nutrient_file_path = 'lib/data/trimmed/nutrient.csv'
 branded_food_file_path = 'lib/data/trimmed/branded_food.csv'
 food_file_path = 'lib/data/trimmed/food.csv'

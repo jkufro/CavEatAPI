@@ -10,10 +10,10 @@ module ApplicationHelper
   # https://coderwall.com/p/jzofog/ruby-on-rails-flash-messages-with-bootstrap
   def flash_class(level)
     case level.to_s
-    when 'notice' then "alert alert-info"
+    when 'notice' then "alert alert-primary"
     when 'success' then "alert alert-success"
-    when 'error' then "alert alert-error"
-    when 'alert' then "alert alert-error"
+    when 'error' then "alert alert-danger"
+    when 'alert' then "alert alert-warning"
     else
       "alert alert-info"
     end

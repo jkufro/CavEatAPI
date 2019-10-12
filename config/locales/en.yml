@@ -63,6 +63,7 @@ en:
       failure: 'Username and/or password is invalid'
     destroy:
       success: 'Logged out!'
+    not_authorized: 'You must be logged in to do that!'
   api:
     vi:
       foods:

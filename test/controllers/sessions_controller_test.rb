@@ -17,8 +17,12 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   should 'logout' do
+    login_user_one
+
     get logout_path
     assert_equal I18n.t('sessions.destroy.success'), flash[:notice]
     assert_redirected_to new_session_path
+
+    logout
   end
 end
