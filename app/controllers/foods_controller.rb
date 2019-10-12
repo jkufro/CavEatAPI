@@ -1,8 +1,9 @@
 class FoodsController < ApplicationController
   before_action :set_food, only: [:show, :edit, :update, :destroy]
+  before_action :set_foods, only: [:index]
 
   def index
-    @foods = Food.all.search(params[:search]).paginate(page: params[:page], per_page: 100)
+    @foods = @foods.paginate(page: params[:page], per_page: 100)
   end
 
   def show
@@ -30,6 +31,11 @@ class FoodsController < ApplicationController
   private
     def set_food
       @food = Food.eager_load(:ingredients).eager_load(nutrition_facts: :nutrient).find(params[:id])
+    end
+
+    def set_foods
+      @foods = Food.all.search(params[:search])
+      @num_records = @foods.count
     end
 
     def food_params

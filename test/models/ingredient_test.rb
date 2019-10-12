@@ -33,7 +33,7 @@ class IngredientTest < ActiveSupport::TestCase
       result = Ingredient.by_composition('no food with this composition')
       assert_equal 0, result.size
 
-      result = Ingredient.by_composition('Description for ')
+      result = Ingredient.by_composition('Composition for ')
       assert_equal 0, result.size
 
       result = Ingredient.by_composition(ingredients(:ingredient_one).composition)
@@ -68,7 +68,7 @@ class IngredientTest < ActiveSupport::TestCase
       search = Ingredient.all.search('')
       assert_equal 2, search.size
 
-      search = Ingredient.all.search('Description for ')
+      search = Ingredient.all.search('Composition for ')
       assert_equal 2, search.size
 
       search = Ingredient.all.search(ingredients(:ingredient_one).composition)

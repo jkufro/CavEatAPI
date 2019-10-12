@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :apidocs, only: [:index]
 
   resources :foods, only: [:index, :show, :update, :edit, :destroy]
-  resources :ingredients, only: [:index, :show, :update, :edit, :destroy]
+  resources :ingredients, only: [:index, :show, :update, :edit, :destroy] do
+    post :bulk_update, on: :collection
+  end
   resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]

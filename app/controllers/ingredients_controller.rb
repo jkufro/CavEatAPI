@@ -1,8 +1,20 @@
 class IngredientsController < ApplicationController
   before_action :set_ingredient, only: [:show, :edit, :update, :destroy]
+  before_action :set_ingredients, only: [:index, :bulk_update]
 
   def index
-    @ingredients = Ingredient.all.search(params[:search]).paginate(page: params[:page], per_page: 100)
+    @ingredients = @ingredients.paginate(page: params[:page], per_page: 100)
+  end
+
+  def bulk_update
+    failed_updates = BulkUpdateService.bulk_update(@ingredients, bulk_update_params)
+    succeeded_updates = @num_records - failed_updates
+    if failed_updates == 0
+      flash[:success] = I18n.t('ingredients.bulk_update.success', succeeded: succeeded_updates)
+    else
+      flash[:warning] = I18n.t('ingredients.bulk_update.warning', succeeded: succeeded_updates, failed: failed_updates)
+    end
+    redirect_to ingredients_path(search: params[:search])
   end
 
   def show
@@ -32,7 +44,16 @@ class IngredientsController < ApplicationController
       @ingredient = Ingredient.find(params[:id])
     end
 
+    def set_ingredients
+      @ingredients = Ingredient.all.search(params[:search])
+      @num_records = @ingredients.count
+    end
+
     def ingredient_params
       params.require(:ingredient).permit(:name, :composition, :description, :is_warning)
+    end
+
+    def bulk_update_params
+      params.require(:ingredient).permit(:description, :is_warning)
     end
 end

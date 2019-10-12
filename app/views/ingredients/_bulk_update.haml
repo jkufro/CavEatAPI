@@ -1,0 +1,12 @@
+.row
+  .col
+    .card
+      .card-body
+        %h2 Bulk Update
+        %p.card-text
+          %em Updates all of the currently filtered ingredients with the provided attributes.
+        = simple_form_for(Ingredient.new, url: bulk_update_ingredients_path(search: params[:search]), html: { class: '' }) do |form|
+          = form.input :description
+          = form.input :is_warning
+          = form.button :submit, "Bulk Update", class: "btn btn-secondary", data: { confirm: I18n.t('ingredients.bulk_update.confirm', num_records: num_records) }
+

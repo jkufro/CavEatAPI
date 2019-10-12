@@ -2,7 +2,14 @@
 
 = render partial: 'ingredients/actions', locals: { ingredient: @ingredient }
 
-= render partial: 'partials/search'
+= render partial: 'ingredients/bulk_update', locals: { num_records: @num_records }
+
+.row.no-pad.justify-content-between
+  .col-4
+    %h2
+      = @num_records.to_s + 'Ingredients'
+  .col-4
+    = render partial: 'partials/search'
 
 = render partial: 'ingredients/table', locals: { ingredients: @ingredients }
 
