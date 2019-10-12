@@ -17,5 +17,12 @@ module ApplicationHelper
     else
       "alert alert-info"
     end
-end
+  end
+
+  def link_if_present(url, text=nil, fallback='N/A')
+    text ||= url
+    return fallback unless url.present?
+
+    link_to text, url
+  end
 end

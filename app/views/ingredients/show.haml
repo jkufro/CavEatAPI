@@ -19,5 +19,8 @@
       %strong Description:
       = @ingredient.description
     %p.lead
+      %strong Source:
+      = link_if_present(@ingredient.source)
+    %p.lead
       %strong Warning?:
       = @ingredient.is_warning ? 'Yes' : 'No'

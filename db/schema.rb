@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_11_145243) do
+ActiveRecord::Schema.define(version: 2019_10_12_170533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_10_11_145243) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "composition"
+    t.string "source"
   end
 
   create_table "nutrients", force: :cascade do |t|
@@ -45,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_10_11_145243) do
     t.boolean "is_limiting"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "source"
   end
 
   create_table "nutrition_facts", force: :cascade do |t|

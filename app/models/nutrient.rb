@@ -6,4 +6,5 @@ class Nutrient < ApplicationRecord
   validates_length_of :name, minimum: 1, allow_blank: false
   validates_presence_of :unit
   validates_length_of :unit, minimum: 1, allow_blank: false
+  validates :source, source: true, allow_blank: true
 end

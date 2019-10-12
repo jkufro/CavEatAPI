@@ -3,11 +3,13 @@
 added_sugars:
   name: 'Added Sugars'
   description: 'Description for added sugars.'
+  source: 'http://google.com/'
   unit: "G"
   is_limiting: true
 
 protien:
   name: 'Protien'
   description: 'Description for protien.'
+  source: null
   unit: 'G'
   is_limiting: false

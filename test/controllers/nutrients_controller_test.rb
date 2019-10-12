@@ -24,12 +24,12 @@ class NutrientsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  should 'successfully edit' do
+  should 'successfully update' do
     patch nutrient_path(nutrients(:added_sugars).id), params: { nutrient: { name: "New Name", description: '', unit: 'G', is_limiting: false } }
     assert_redirected_to nutrient_path(nutrients(:added_sugars).id)
   end
 
-  should 'fail edit' do
+  should 'fail update' do
     patch nutrient_path(nutrients(:added_sugars).id), params: { nutrient: { name: nil, description: '', unit: nil, is_limiting: false } }
     assert_template :edit
   end

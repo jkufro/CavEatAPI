@@ -19,5 +19,8 @@
       %strong Description:
       = @nutrient.description || 'N/A'
     %p.lead
+      %strong Source:
+      = link_if_present(@nutrient.source)
+    %p.lead
       %strong Limiting?:
       = @nutrient.is_limiting ? 'Yes' : 'No'

@@ -39,12 +39,12 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_template :edit
   end
 
-  should 'successfully edit' do
+  should 'successfully update' do
     patch user_path(users(:user_one).id), params: { user: { username: "user_one", password: 'secret1', password_confirmation: 'secret1' } }
     assert_redirected_to user_path(users(:user_one).id)
   end
 
-  should 'fail edit' do
+  should 'fail update' do
     patch user_path(users(:user_one).id), params: { user: { username: "", password: '', password_confirmation: '' } }
     assert_template :edit
   end

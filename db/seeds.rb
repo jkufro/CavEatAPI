@@ -50,6 +50,7 @@ def load_nutrients(nutrient_file_path)
         id: row[id_col],
         name: row[name_col],
         description: nil,
+        source: nil,
         unit: row[unit_col],
         is_limiting: false
       )
@@ -121,7 +122,8 @@ def create_ingredient_and_add_to_food(food, ingredient_string)
   ingredient = Ingredient.new(
     name: ingredient_name,
     composition: ingredient_composition,
-    description: '',
+    description: nil,
+    source: nil,
     is_warning: false
   )
   unless ingredient.save

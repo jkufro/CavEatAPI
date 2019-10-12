@@ -4,10 +4,12 @@ ingredient_one:
   name: Ingredient One
   composition: '(Composition For Ingredient One.)'
   description: ''
+  source: 'https://google.com'
   is_warning: true
 
 ingredient_two:
   name: Ingredient Two
   composition: '[Composition For Ingredient Two.]'
   description: ''
+  source: null
   is_warning: false

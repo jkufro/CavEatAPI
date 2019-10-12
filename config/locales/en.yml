@@ -30,6 +30,8 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
+  source:
+    invalid: 'is not a valid URL in http:// or https:// format'
   foods:
     update:
       success: 'Successfully updated food.'
@@ -46,7 +48,7 @@ en:
     bulk_update:
       confirm: "Are you sure you want to update %{num_records} Ingredients?"
       success: "Successfully updated %{succeeded} Ingredients."
-      warning: "Could not update %{failed} Ingredients. #{succeeded} Ingredients were successfully updated."
+      warning: "Could not update %{failed} Ingredients. %{succeeded} Ingredients were successfully updated."
     update:
       success: 'Successfully updated ingredient.'
       failure: 'Could not update ingredient.'

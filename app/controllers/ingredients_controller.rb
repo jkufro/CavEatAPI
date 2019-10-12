@@ -50,10 +50,10 @@ class IngredientsController < ApplicationController
     end
 
     def ingredient_params
-      params.require(:ingredient).permit(:name, :composition, :description, :is_warning)
+      params.require(:ingredient).permit(:name, :composition, :description, :source, :is_warning)
     end
 
     def bulk_update_params
-      params.require(:ingredient).permit(:description, :is_warning)
+      params.require(:ingredient).permit(:description, :source, :is_warning)
     end
 end

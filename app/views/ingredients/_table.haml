@@ -6,6 +6,7 @@
         %th Name
         %th Compoosition
         %th Description
+        %th Source
         %th Warning?
     %tbody
       - ingredients.each do |ingredient|
@@ -18,6 +19,8 @@
             = ingredient.composition
           %td
             = ingredient.description
+          %td
+            = link_if_present(ingredient.source, 'Source', '')
           %td
             = ingredient.is_warning ? 'Yes' : 'No'
 - else

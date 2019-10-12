@@ -5,6 +5,7 @@
         %th ID
         %th Name
         %th Description
+        %th Source
         %th Unit
         %th Limiting?
     %tbody
@@ -15,7 +16,9 @@
           %td
             = link_to nutrient.name, nutrient_path(nutrient)
           %td
-            = nutrient.description || 'N/A'
+            = nutrient.description
+          %td
+            = link_if_present(nutrient.source, 'Source', '')
           %td
             = nutrient.unit
           %td

@@ -24,12 +24,12 @@ class FoodsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  should 'successfully edit' do
+  should 'successfully update' do
     patch food_path(foods(:food_one).id), params: { food: { name: "New Name", upc: 1234567890 } }
     assert_redirected_to food_path(foods(:food_one).id)
   end
 
-  should 'fail edit' do
+  should 'fail update' do
     patch food_path(foods(:food_one).id), params: { food: { name: "food_two", upc: nil } }
     assert_template :edit
   end
