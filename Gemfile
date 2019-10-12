@@ -13,7 +13,6 @@ gem 'fast_jsonapi'
 gem 'swagger-blocks'
 gem 'swagger_ui_engine'
 gem 'pg'
-gem 'cancancan'
 gem "haml-rails", "~> 2.0"
 # gems for testing
 gem "rubocop-rails_config", require: false
