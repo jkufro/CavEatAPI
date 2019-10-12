@@ -39,7 +39,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    flash[:notice] = I18n.t('user.destroy.success')
+    flash[:notice] = I18n.t('users.destroy.success')
     redirect_to :users
   end
 
