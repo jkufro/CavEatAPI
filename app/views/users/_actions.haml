@@ -1,0 +1,8 @@
+.row
+  .col
+    = link_to 'All Users', :users, class: 'btn btn-primary'
+    = link_to 'New User', new_user_path, class: 'btn btn-success'
+    - if user&.id
+      = link_to 'Show User', user_path(user), class: 'btn btn-info'
+      = link_to 'Edit User', edit_user_path(user), class: 'btn btn-secondary'
+      = link_to 'Destroy User', user_path(user), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" }

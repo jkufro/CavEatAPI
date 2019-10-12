@@ -1,0 +1,7 @@
+%h1 Users
+
+= render partial: 'users/actions', locals: { user: @user }
+
+= render partial: 'partials/search'
+
+= render partial: 'users/table', locals: { users: @users }

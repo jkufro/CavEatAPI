@@ -1,2 +1,0 @@
-class NutritionFactsController < ApplicationController
-end

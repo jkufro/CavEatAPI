@@ -48,6 +48,15 @@ en:
       failure: 'Could not update ingredient.'
     destroy:
       success: 'Successfully destroyed ingredient.'
+  users:
+    create:
+      success: 'Successfully created user.'
+      failure: 'Could not create user.'
+    update:
+      success: 'Successfully updated user.'
+      failure: 'Could not update user.'
+    destroy:
+      success: 'Successfully destroyed user.'
   api:
     vi:
       foods:

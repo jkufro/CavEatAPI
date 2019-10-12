@@ -16,7 +16,6 @@ class IngredientsController < ApplicationController
       flash[:success] = I18n.t('ingredients.update.success')
       redirect_to ingredient_path(@ingredient)
     else
-      # return to the 'new' form
       flash[:error] = I18n.t('ingredients.update.failure')
       render action: 'edit'
     end

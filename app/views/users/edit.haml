@@ -1,0 +1,8 @@
+%h1
+  = @user.username
+
+= render partial: 'users/actions', locals: { user: @user }
+
+.row
+  .col
+    = render partial: 'users/form', locals: { user: @user }

@@ -1,0 +1,14 @@
+%h1
+  = @user.username
+
+= render partial: 'users/actions', locals: { user: @user }
+
+.row
+  .col
+    %h2 Attributes
+    %p.lead
+      %strong ID:
+      = @user.id
+    %p.lead
+      %strong Username:
+      = @user.username
