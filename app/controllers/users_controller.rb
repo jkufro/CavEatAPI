@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_users, only: [:index]
 
   def index
-    @users = User.all.alphabetical
   end
 
   def show
@@ -46,6 +46,11 @@ class UsersController < ApplicationController
   private
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_users
+      @users = User.all.alphabetical
+      @num_records = @users.count
     end
 
     def user_params

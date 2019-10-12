@@ -7,7 +7,7 @@
 .row.no-pad.justify-content-between
   .col-4
     %h2
-      = @num_records.to_s + 'Ingredients'
+      = number_with_delimiter(@num_records, :delimiter => ',') + ' Ingredients'
   .col-4
     = render partial: 'partials/search'
 

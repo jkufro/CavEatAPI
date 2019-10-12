@@ -1,8 +1,8 @@
 class NutrientsController < ApplicationController
   before_action :set_nutrient, only: [:show, :edit, :update, :destroy]
+  before_action :set_nutrients, only: [:index]
 
   def index
-    @nutrients = Nutrient.all
   end
 
   def show
@@ -30,6 +30,11 @@ class NutrientsController < ApplicationController
   private
     def set_nutrient
       @nutrient = Nutrient.find(params[:id])
+    end
+
+    def set_nutrients
+      @nutrients = Nutrient.all
+      @num_records = @nutrients.count
     end
 
     def nutrient_params
