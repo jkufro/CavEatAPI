@@ -7,7 +7,26 @@ class FoodService
   end
 
   def self.nutrition_facts_from_string(nutrition_facts_string)
-    []
+    found_nutrition_facts = []
+    nutrition_facts_string.gsub!("\n", " ")
+    nutrition_facts_string.gsub!(/\d{1,3}%/, '')
+    nutrition_facts_string.downcase!
+    available_nutrients = Nutrient.all
+
+    available_nutrients.each do |nutrient|
+      start_index = nutrition_facts_string.index(nutrient.name.downcase)
+      if start_index
+        amount = get_amount_from_string(nutrition_facts_string, start_index, nutrient.unit.downcase)
+        next unless amount
+        nutrition_fact = NutritionFact.new(
+          nutrient_id: nutrient.id,
+          amount: amount
+        )
+        found_nutrition_facts << nutrition_fact if nutrition_fact
+      end
+    end
+
+    return found_nutrition_facts
   end
 
   def self.ingredients_from_string(ingredients_string)
@@ -19,6 +38,10 @@ class FoodService
   end
 
   private
+    def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
+      nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/(\d+)#{unit}/)&.captures&.first&.to_i
+    end
+
     def self.get_tentative_ingredients_from_string(ingredients_string)
       tentative_ingredients = []
       ingredients_string.gsub!("\n", "")

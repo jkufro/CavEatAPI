@@ -45,7 +45,7 @@ namespace :db do
               name: row[name_col],
               description: nil,
               source: nil,
-              unit: row[unit_col],
+              unit: row[unit_col].downcase,
               is_limiting: false
             )
           end
