@@ -12,6 +12,49 @@ class IngredientTest < ActiveSupport::TestCase
     should validate_length_of(:name).is_at_least(1)
   end
 
+  context 'hashing and equality' do
+    should 'satisfy all requirements' do
+      i1 = Ingredient.new(name: 'salt', composition: '(salt duh)')
+      i2 = Ingredient.new(name: 'salt', composition: '(salt duh)')
+      i3 = Ingredient.new(name: 'salt', composition: '!!!(salt duh)')
+      i4 = Ingredient.new(name: 'salt!!!', composition: '(salt duh)')
+      i5 = Ingredient.new(name: 'corn', composition: '')
+      assert i1 == i1
+      assert i1 == i2
+      assert i1 != i3
+      assert i1 != i4
+      assert i2 == i2
+      assert i2 != i3
+      assert i2 != i4
+      assert i3 == i3
+      assert i3 != i4
+      assert i4 == i4
+      assert i4 != i5
+      assert i5 == i5
+
+      assert i1.eql? i1
+      assert i1.eql? i2
+      assert_not i1.eql? i3
+      assert_not i1.eql? i4
+      assert i2.eql? i2
+      assert_not i2.eql? i3
+      assert_not i2.eql? i4
+      assert i3.eql? i3
+      assert_not i3.eql? i4
+      assert i4.eql? i4
+      assert_not i4.eql? i5
+      assert i5.eql? i5
+
+      ingredients_hash = { i1 => i1, i3 => i3 }
+      ingredients_hash.default = nil
+      assert_equal i1, ingredients_hash[i1]
+      assert_equal i1, ingredients_hash[i2]
+      assert_equal i3, ingredients_hash[i3]
+      assert_nil ingredients_hash[i4]
+      assert_nil ingredients_hash[i5]
+    end
+  end
+
   context 'scopes' do
     should 'show that by_name scope works' do
       result = Ingredient.by_name('no food with this name')

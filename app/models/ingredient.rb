@@ -22,4 +22,20 @@ class Ingredient < ApplicationRecord
       "%#{search_term}%"
     )
   }
+
+  def hash
+    return calculated_hash if calculated_hash
+    calculated_hash = [name, composition].hash
+  end
+
+  def ==(o)
+    o.class == self.class && o.hash == hash
+  end
+
+  def eql?(other)
+    self == other
+  end
+
+  private
+    attr_accessor :calculated_hash
 end
