@@ -7,7 +7,7 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   context 'basic validations' do
-    should validate_uniqueness_of(:name).scoped_to(:composition)
+    should validate_uniqueness_of(:name).scoped_to(:composition).case_insensitive
     should validate_presence_of(:name)
     should validate_length_of(:name).is_at_least(1)
   end
@@ -15,7 +15,7 @@ class IngredientTest < ActiveSupport::TestCase
   context 'hashing and equality' do
     should 'satisfy all requirements' do
       i1 = Ingredient.new(name: 'salt', composition: '(salt duh)')
-      i2 = Ingredient.new(name: 'salt', composition: '(salt duh)')
+      i2 = Ingredient.new(name: 'Salt', composition: '(salt Duh)') # case insensitive
       i3 = Ingredient.new(name: 'salt', composition: '!!!(salt duh)')
       i4 = Ingredient.new(name: 'salt!!!', composition: '(salt duh)')
       i5 = Ingredient.new(name: 'corn', composition: '')
@@ -56,6 +56,43 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   context 'scopes' do
+    should 'show that by_name_composition_pairs scope works' do
+      result = Ingredient.by_name_composition_pairs([['no ingredient with this name', '']])
+      assert_equal 0, result.size
+
+      result = Ingredient.by_name_composition_pairs([['ingredient_on', 'e']])
+      assert_equal 0, result.size
+
+      result = Ingredient.by_name_composition_pairs([
+        ['Ingredient Two', '(Composition For Ingredient One.)']
+      ])
+      assert_equal 0, result.size
+
+      result = Ingredient.by_name_composition_pairs([
+        ['Ingredient One', '(Composition For Ingredient One.)']
+      ])
+      assert_equal ingredients(:ingredient_one).name, result.first.name
+      assert_equal 1, result.size
+
+      result = Ingredient.by_name_composition_pairs([
+        ['Ingredient Two', '[Composition For Ingredient Two.]']
+      ])
+      assert_equal ingredients(:ingredient_two).name, result.first.name
+      assert_equal 1, result.size
+
+      result = Ingredient.by_name_composition_pairs([
+        ['Ingredient One', '(Composition For Ingredient One.)'],
+        ['Ingredient Two', '[Composition For Ingredient Two.]']
+      ])
+      assert_equal 2, result.size
+
+      result = Ingredient.by_name_composition_pairs([
+        ['ingReDIent One', '(composition For InGredient One.)'],
+        ['ingrEdient TwO', '[composition For Ingredient TWo.]']
+      ])
+      assert_equal 2, result.size
+    end
+
     should 'show that by_name scope works' do
       result = Ingredient.by_name('no food with this name')
       assert_equal 0, result.size

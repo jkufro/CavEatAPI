@@ -11,16 +11,11 @@ class FoodService
   end
 
   def self.ingredients_from_string(ingredients_string)
-    tentative_ingredients = get_tentative_ingredients_from_string(ingredients_string)
-    found_ingredients = []
-
-    tentative_ingredients.each do |tentative_ingredient|
-      ingredient = Ingredient.by_name(tentative_ingredient.name).by_composition(tentative_ingredient.composition).first
-      next unless ingredient
-      found_ingredients << ingredient
-    end
-
-    return found_ingredients
+    Ingredient.by_name_composition_pairs(
+      get_tentative_ingredients_from_string(ingredients_string).map {
+        |t| [t.name, t.composition]
+      }
+    )
   end
 
   private
@@ -28,6 +23,9 @@ class FoodService
       tentative_ingredients = []
       ingredients_string.gsub!("\n", "")
       ingredients_string = ingredients_string.titleize
+      on_and_after_index = ingredients_string.index('INGREDIENTS:')
+      ingredients_string = ingredient_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
+      ingredients_string.gsub!('INGREDIENTS:', '')
 
       # remove trailing '.' if exists
       ingredients_string.chop! if ingredients_string.end_with?('.')
@@ -66,9 +64,8 @@ class FoodService
       ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
       return Ingredient.new(
-        name: ingredient_name.strip,
-        composition: ingredient_composition.strip,
-        is_warning: false
+        name: ingredient_name.strip.titleize,
+        composition: ingredient_composition.strip.titleize
       )
     end
 end

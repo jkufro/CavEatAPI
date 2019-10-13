@@ -136,8 +136,8 @@ namespace :db do
       ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
       ingredient = Ingredient.new(
-        name: ingredient_name,
-        composition: ingredient_composition,
+        name: ingredient_name.strip.titleize,
+        composition: ingredient_composition.strip.titleize,
         is_warning: false
       )
       already_existing_ingredient = all_ingredients[ingredient]

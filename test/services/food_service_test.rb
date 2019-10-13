@@ -1,13 +1,13 @@
 require 'test_helper'
 
 class FoodServiceTest < ActiveSupport::TestCase
-  should 'get ingredients_from_string' do
+  should 'basic get ingredients_from_string' do
     ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
     ingredients = FoodService.ingredients_from_string(ingredients_string)
     assert_equal 2, ingredients.size
   end
 
-  should 'get food_from_strings' do
+  should 'basic get food_from_strings' do
     upc = 6612381239
     nutrition_facts_string = ''
     ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"

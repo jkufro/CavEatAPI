@@ -84,9 +84,6 @@ module Api
         end
       end
 
-
-
-
       def show_by_upc
         if @food
           render json: FoodSerializer.new(@food, serialize_options).serialized_json
@@ -117,7 +114,7 @@ module Api
         end
 
         def set_food_upc
-          @food = Food.eager_load(:ingredients).eager_load(nutrition_facts: :nutrient).find_by_upc(show_by_upc_params[:upc])
+          @food = Food.includes([:ingredients, nutrition_facts: :nutrient]).find_by_upc(show_by_upc_params[:upc])
         end
 
         def set_food_strings
