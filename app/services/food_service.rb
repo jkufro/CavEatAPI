@@ -13,15 +13,19 @@ class FoodService
     nutrition_facts_string.downcase!
     available_nutrients = Nutrient.all
 
+    dummy_id = 1  # required for fastjson to serialize
+
     available_nutrients.each do |nutrient|
       start_index = nutrition_facts_string.index(nutrient.name.downcase)
       if start_index
         amount = get_amount_from_string(nutrition_facts_string, start_index, nutrient.unit.downcase)
         next unless amount
         nutrition_fact = NutritionFact.new(
+          id: dummy_id,
           nutrient_id: nutrient.id,
           amount: amount
         )
+        dummy_id += 1
         found_nutrition_facts << nutrition_fact if nutrition_fact
       end
     end
@@ -46,9 +50,9 @@ class FoodService
       tentative_ingredients = []
       ingredients_string.gsub!("\n", "")
       ingredients_string = ingredients_string.titleize
-      on_and_after_index = ingredients_string.index('INGREDIENTS:')
-      ingredients_string = ingredient_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
-      ingredients_string.gsub!('INGREDIENTS:', '')
+      on_and_after_index = ingredients_string.index('Ingredients:')
+      ingredients_string = ingredients_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
+      ingredients_string.gsub!('Ingredients:', '')
 
       # remove trailing '.' if exists
       ingredients_string.chop! if ingredients_string.end_with?('.')
