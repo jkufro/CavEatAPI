@@ -30,7 +30,10 @@ class FoodsController < ApplicationController
 
   private
     def set_food
-      @food = Food.eager_load(:ingredients).eager_load(nutrition_facts: :nutrient).find(params[:id])
+      # @food = Food.eager_load(nutrition_facts: :nutrient).eager_load(:ingredients).find(params[:id])
+      @food = Food.includes([:ingredients, nutrition_facts: :nutrient]).find(params[:id])
+      # @food = Food.joins([:ingredients, nutrition_facts: :nutrient]).find(params[:id])
+      # @food = Food.preload([:ingredients, nutrition_facts: :nutrient]).find(params[:id])
     end
 
     def set_foods
