@@ -162,13 +162,7 @@ namespace :db do
 
       ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
       product_ingredients.split('').each do |c|
-        if ingredient.size > 0 && open_paren == close_paren && open_square == close_square && open_curly == close_curly && c == ','
-          ingredient.strip!
-          ingredient.chop! while ingredient.end_with?('*')
-          ingredient.sub!('*', '') while ingredient.start_with?('*')
-          ingredient.strip!
-          ingredient = ingredient.titleize
-
+        if ingredient.size > 0 && open_paren == close_paren && open_square == close_square && open_curly == close_curly && (c == ',' || c == '.' || c == ';')
           create_ingredient_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, ingredient)
 
           ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
@@ -188,6 +182,15 @@ namespace :db do
 
 
     def create_ingredient_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, ingredient_string)
+      # cleanup string
+      ingredient_string.strip!
+      ingredient_string.chop! while ingredient_string.end_with?('*')
+      ingredient_string.sub!('*', '') while ingredient_string.start_with?('*')
+      ingredient_string.chop! while ingredient_string.end_with?('.')
+      ingredient_string.chop! while ingredient_string.end_with?('*')
+      ingredient_string.strip!
+      ingredient_string = ingredient_string.titleize
+
       # split up the name and composition based on first (, {, or [
       split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
       ingredient_name = split_index ? ingredient_string.slice(0, split_index) : ingredient_string
