@@ -124,7 +124,7 @@ namespace :db do
       upc_col = 2
       ingredients_col = 3
 
-      ingredient_id_h = { id: 1 }  # manually give ingredients an id
+      ingredient_id_counter = 1  # manually give ingredients an id
       batch_size = 10000
 
       puts "Parsing Foods and Ingredients from #{branded_food_file_path}..."
@@ -137,7 +137,25 @@ namespace :db do
             upc: row[upc_col],
             name: 'Unnamed Food'
           )
-          get_ingredients_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, row[ingredients_col])
+
+          ingredients = FoodService.get_tentative_ingredients_from_string(row[ingredients_col])
+          ingredients.each do |ingredient|
+            # Check if the ingredient already exists
+            already_existing_ingredient = all_ingredients[ingredient]  # check the Set
+            if already_existing_ingredient
+              ingredient = already_existing_ingredient
+            else
+              ingredient.id = ingredient_id_counter
+              ingredient_id_counter += 1
+              all_ingredients[ingredient] = ingredient
+            end
+
+            # create the FoodIngredient
+            all_food_ingredients << FoodIngredient.new(
+              food_id: food.id,
+              ingredient_id: ingredient.id
+            )
+          end
 
           all_foods[food.id] = food
           num_foods += 1
@@ -153,72 +171,6 @@ namespace :db do
 
       puts "Done parsing Foods and Ingredients.\n\n"
       return [all_foods, all_ingredients]
-    end
-
-
-    def get_ingredients_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, product_ingredients)
-      # remove trailing '.' if exists
-      product_ingredients.gsub!("\n", " ")
-      product_ingredients.gsub!(/[†‡*]/, '')
-      product_ingredients = product_ingredients.downcase
-      on_and_after_index = product_ingredients.index('ingredients:')
-      product_ingredients = product_ingredients.slice(on_and_after_index, product_ingredients.length + 1) if on_and_after_index
-      product_ingredients.gsub!('ingredients:', '')
-      product_ingredients.chop! if product_ingredients.end_with?('.')
-
-      ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
-      product_ingredients.split('').each do |c|
-        if ingredient.size > 0 && open_paren == close_paren && open_square == close_square && open_curly == close_curly && (c == ',' || c == '.' || c == ';')
-          create_ingredient_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, ingredient)
-
-          ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
-          next
-        end
-        open_paren += 1 if c == '('
-        close_paren += 1 if c == ')'
-        open_square += 1 if c == '['
-        close_square += 1 if c == ']'
-        open_curly += 1 if c == '{'
-        close_curly += 1 if c == '}'
-        ingredient += c
-      end
-
-      create_ingredient_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, ingredient)
-    end
-
-
-    def create_ingredient_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, ingredient_string)
-      # cleanup string
-      ingredient_string.strip!
-      ingredient_string.chop! while ingredient_string.end_with?('*')
-      ingredient_string.sub!('*', '') while ingredient_string.start_with?('*')
-      ingredient_string.chop! while ingredient_string.end_with?('.')
-      ingredient_string.chop! while ingredient_string.end_with?('*')
-      ingredient_string.strip!
-
-      # split up the name and composition based on first (, {, or [
-      split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
-      ingredient_name = split_index ? ingredient_string.slice(0, split_index) : ingredient_string
-      ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
-
-      ingredient = Ingredient.new(
-        name: ingredient_name.strip,
-        composition: ingredient_composition.strip,
-        is_warning: false
-      )
-      already_existing_ingredient = all_ingredients[ingredient]  # check the Set
-      if already_existing_ingredient
-        ingredient = already_existing_ingredient
-      else
-        ingredient.id = ingredient_id_h[:id]
-        ingredient_id_h[:id] += 1
-        all_ingredients[ingredient] = ingredient
-      end
-
-      all_food_ingredients << FoodIngredient.new(
-        food_id: food.id,
-        ingredient_id: ingredient.id
-      )
     end
 
 
