@@ -29,6 +29,23 @@ class FoodServiceTest < ActiveSupport::TestCase
       assert_equal 'Unnamed Food', food.name
       assert_equal upc, food.upc
     end
+
+    should 'get_tentative_ingredients_from_string' do
+      input = ''
+      assert_equal 0, FoodService.get_tentative_ingredients_from_string(input).size
+
+      input = '.'
+      assert_equal 0, FoodService.get_tentative_ingredients_from_string(input).size
+
+      input = 'LIGHT TUNA, WATER, VEGETABLE BROTH (SOY), SALT. '
+      assert_equal 4, FoodService.get_tentative_ingredients_from_string(input).size
+
+      input = 'PASTEURIZED MILK, SALT, ENZYMES, CHEESE CULTURES (LACTIC STARTER, SOY PROTEIN). '
+      assert_equal 4, FoodService.get_tentative_ingredients_from_string(input).size
+
+      input = '(GLUTEN-FREE, NON-GMO): VEGENAISE* (SOYBEAN OIL*, FILTERED WATER, BROWN RICE SYRUP*, APPLE CIDER VINEGAR*, SOY PROTEIN*, SEA SALT, MUSTARD FLOUR*, LEMON JUICE CONCENTRATE*), FILTERED WATER, FRESH CULTURE BUTTERMILK*, WHITE VINEGAR*, SOUR CREAM* (CULTURED PASTEURIZED NONFAT MILK*, PASTEURIZED CREAM*, ACIDOPHILUS AND BIFIDUS CULTURES, MICROBIAL ENZYME), SEA SALT, GARLIC*, XANTHAN GUM, ONION*, SPICES*, NATURAL FLAVOR, MUSTARD FLOUR*.'
+      assert_equal 12, FoodService.get_tentative_ingredients_from_string(input).size
+    end
   end
 
   def assert_has_ingredients(expected, result)

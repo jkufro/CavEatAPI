@@ -24,3 +24,6 @@
     %p.lead
       %strong Warning?:
       = @ingredient.is_warning ? 'Yes' : 'No'
+
+    %h2 Foods Using This Ingredient
+    = render partial: 'foods/table', locals: { foods: @foods }

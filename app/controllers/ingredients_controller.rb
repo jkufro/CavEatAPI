@@ -18,6 +18,7 @@ class IngredientsController < ApplicationController
   end
 
   def show
+    @foods = @ingredient.foods
   end
 
   def edit

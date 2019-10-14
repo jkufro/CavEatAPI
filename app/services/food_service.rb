@@ -44,6 +44,7 @@ class FoodService
 
   def self.get_tentative_ingredients_from_string(ingredients_string)
     tentative_ingredients = []
+    ingredients_string.strip!
     ingredients_string.gsub!("\n", " ")
     ingredients_string.gsub!(/[†‡*]/, '')
     ingredients_string = ingredients_string.downcase
@@ -51,14 +52,14 @@ class FoodService
     ingredients_string = ingredients_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
     ingredients_string.gsub!('ingredients:', '')
     ingredients_string.chop! if ingredients_string.end_with?('.')
-
-    # remove trailing '.' if exists
-    ingredients_string.chop! if ingredients_string.end_with?('.')
+    ingredients_string.strip!
 
     ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
     ingredients_string.split('').each do |c|
-      if ingredient.size > 0 && open_paren == close_paren && open_square == close_square && open_curly == close_curly && (c == ',' || c == '.' || c == ';')
-        tentative_ingredients << build_ingredient_from_string(ingredient)
+      if open_paren == close_paren && open_square == close_square && open_curly == close_curly && (c == ',' || c == '.' || c == ';')
+        if ingredient.size > 0
+          tentative_ingredients << build_ingredient_from_string(ingredient)
+        end
 
         ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0
         next
@@ -72,7 +73,7 @@ class FoodService
       ingredient += c
     end
 
-    tentative_ingredients << build_ingredient_from_string(ingredient)
+    tentative_ingredients << build_ingredient_from_string(ingredient) if ingredient.length > 0
 
     return tentative_ingredients
   end
