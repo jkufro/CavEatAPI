@@ -37,7 +37,7 @@ class FoodsController < ApplicationController
     end
 
     def set_foods
-      @foods = Food.all.search(params[:search])
+      @foods = Food.all.alphabetical.search(params[:search])
       @num_records = @foods.count
     end
 

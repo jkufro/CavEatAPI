@@ -12,6 +12,8 @@ class Nutrient < ApplicationRecord
     super(value&.capitalize_first_letters)
   end
 
+  scope :alphabetical, -> { order(:name) }
+
   scope :search, ->(search_term) {
     where("nutrients.name ILIKE ?", "%#{search_term}%")
   }

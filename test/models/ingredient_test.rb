@@ -159,5 +159,16 @@ class IngredientTest < ActiveSupport::TestCase
       assert_equal 1, search.size
       assert_equal ingredients(:ingredient_two).composition, search.first.composition
     end
+
+    should 'show that the alphabetical scope works' do
+      ingredient_one_two = Ingredient.create(
+        name: 'Ingredient One',
+        composition: '(The composition For Ingredient One.)'
+      )
+
+      assert_equal [ingredients(:ingredient_one), ingredient_one_two, ingredients(:ingredient_two)], Ingredient.alphabetical
+
+      ingredient_one_two.delete
+    end
   end
 end

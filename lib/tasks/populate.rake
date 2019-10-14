@@ -158,6 +158,12 @@ namespace :db do
 
     def get_ingredients_from_string(food, all_food_ingredients, all_ingredients, ingredient_id_h, product_ingredients)
       # remove trailing '.' if exists
+      product_ingredients.gsub!("\n", " ")
+      product_ingredients.gsub!(/[†‡*]/, '')
+      product_ingredients = product_ingredients.downcase
+      on_and_after_index = product_ingredients.index('ingredients:')
+      product_ingredients = product_ingredients.slice(on_and_after_index, product_ingredients.length + 1) if on_and_after_index
+      product_ingredients.gsub!('ingredients:', '')
       product_ingredients.chop! if product_ingredients.end_with?('.')
 
       ingredient, open_paren, close_paren, open_square, close_square, open_curly, close_curly = "", 0, 0, 0, 0, 0, 0

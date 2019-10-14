@@ -48,5 +48,9 @@ class FoodTest < ActiveSupport::TestCase
       assert_equal 1, search.size
       assert_equal foods(:food_two).upc, search.first.upc
     end
+
+    should 'show that the alphabetical scope works' do
+      assert_equal [foods(:food_one), foods(:food_two)], Food.alphabetical.to_a
+    end
   end
 end

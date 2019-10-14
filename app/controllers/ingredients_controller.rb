@@ -45,7 +45,7 @@ class IngredientsController < ApplicationController
     end
 
     def set_ingredients
-      @ingredients = Ingredient.all.search(params[:search])
+      @ingredients = Ingredient.all.alphabetical.search(params[:search])
       @num_records = @ingredients.count
     end
 

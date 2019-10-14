@@ -11,6 +11,8 @@ class Food < ApplicationRecord
     super(value&.capitalize_first_letters)
   end
 
+  scope :alphabetical, -> { order(:name) }
+
   scope :search, ->(search_term) {
     where(
       "foods.upc = ? OR foods.name ILIKE ? ",

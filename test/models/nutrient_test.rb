@@ -47,5 +47,9 @@ class NutrientTest < ActiveSupport::TestCase
       assert_equal 1, result.size
       assert_equal nutrients(:protein).name, result.first.name
     end
+
+    should 'show that the alphabetical scope works' do
+      assert_equal [nutrients(:added_sugars), nutrients(:protein)], Nutrient.alphabetical.to_a
+    end
   end
 end
