@@ -44,7 +44,7 @@ class FoodService
 
   private
     def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
-      nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/^\s*<?(\d+(.\d+)?)#{unit}/)&.captures&.first&.to_i
+      nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/^\s*<?(\d+(.\d+)?)#{unit}/)&.captures&.first&.to_f
     end
 
     def self.get_tentative_ingredients_from_string(ingredients_string)

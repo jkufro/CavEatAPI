@@ -1,34 +1,50 @@
 require 'test_helper'
+require 'set'
 
 class FoodServiceTest < ActiveSupport::TestCase
-  # context 'basic tests' do
-  #   should 'get ingredients_from_string' do
-  #     ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
-  #     ingredients = FoodService.ingredients_from_string(ingredients_string)
-  #     assert_equal 2, ingredients.size
-  #   end
+  context 'basic tests' do
+    should 'get ingredients_from_string' do
+      ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
+      ingredients = FoodService.ingredients_from_string(ingredients_string)
+      assert_equal 2, ingredients.size
+    end
 
-  #   should 'get nutrition_facts_from_string' do
-  #     nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
-  #     nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
-  #     assert_equal 2, nutrition_facts.size
-  #     assert_equal nutrients(:added_sugars).name, nutrition_facts.first.name
-  #     assert_equal 5, nutrition_facts.first.amount.to_i
-  #     assert_equal nutrients(:protien).name, nutrition_facts.second.name
-  #     assert_equal 20, nutrition_facts.second.amount.to_i
-  #   end
+    should 'get nutrition_facts_from_string' do
+      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
+      nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
+      assert_equal 2, nutrition_facts.size
+      assert_equal nutrients(:added_sugars).name, nutrition_facts.first.name
+      assert_equal 5, nutrition_facts.first.amount.to_i
+      assert_equal nutrients(:protien).name, nutrition_facts.second.name
+      assert_equal 20, nutrition_facts.second.amount.to_i
+    end
 
-  #   should 'get food_from_strings' do
-  #     upc = 6612381239
-  #     nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
-  #     ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
-  #     food = FoodService.food_from_strings(upc, nutrition_facts_string, ingredients_string)
-  #     assert_equal 2, food.nutrition_facts.size
-  #     assert_equal 2, food.ingredients.size
-  #     assert_equal 'Unnamed Food', food.name
-  #     assert_equal upc, food.upc
-  #   end
-  # end
+    should 'get food_from_strings' do
+      upc = 6612381239
+      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
+      ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
+      food = FoodService.food_from_strings(upc, nutrition_facts_string, ingredients_string)
+      assert_equal 2, food.nutrition_facts.size
+      assert_equal 2, food.ingredients.size
+      assert_equal 'Unnamed Food', food.name
+      assert_equal upc, food.upc
+    end
+  end
+
+  def assert_has_ingredients(expected, result)
+    assert_equal Set.new(expected), Set.new(result)
+  end
+
+  def assert_has_nutrition_facts(expected, result)
+    assert_equal Set.new(expected.map(&:first)), Set.new(result.map(&:nutrient))
+    expected_hash = {}
+    result_hash = {}
+    result.each { |r| result_hash[r.name] = r }
+    expected.each { |e| expected_hash[e.first.name] = e.second }
+    expected_hash.each do |key, value|
+      assert_equal value, result_hash[key].amount
+    end
+  end
 
   context 'complex tests' do
     setup do
@@ -43,6 +59,7 @@ class FoodServiceTest < ActiveSupport::TestCase
       @sodium = Nutrient.create(name: 'Sodium', unit: 'mg', description: '', is_limiting: false)
       @potassium = Nutrient.create(name: 'Potassium', unit: 'mg', description: '', is_limiting: false)
       @carbs = Nutrient.create(name: 'Total Carbohydrate', unit: 'g', description: '', is_limiting: false)
+      @short_carbs = Nutrient.create(name: 'Total Carb.', unit: 'g', description: '', is_limiting: false)
       @fiber = Nutrient.create(name: 'Dietary Fiber', unit: 'g', description: '', is_limiting: false)
       @sugars = Nutrient.create(name: 'Sugars', unit: 'g', description: '', is_limiting: false)
       @protien = Nutrient.create(name: 'Protein', unit: 'g', description: '', is_limiting: false)
@@ -117,39 +134,170 @@ class FoodServiceTest < ActiveSupport::TestCase
       ingredients_string = file_fixture('ingredients_scan_1.txt').read
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 5, ingredients.size
+      assert_has_ingredients(
+        [
+          @wheat,
+          @sugar,
+          @salt,
+          @syrup,
+          @soda
+        ],
+        ingredients
+      )
 
       ingredients_string = file_fixture('ingredients_scan_2.txt').read
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 1, ingredients.size
+      assert_has_ingredients(
+        [
+          @cult_cream
+        ],
+        ingredients
+      )
 
       ingredients_string = file_fixture('ingredients_scan_3.txt').read
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 9, ingredients.size
+      assert_has_ingredients(
+        [
+          @chicpeas,
+          @water,
+          @sesame,
+          @oils,
+          @sea_salt,
+          @garlic,
+          @citric,
+          @cumin,
+          @guar
+        ],
+        ingredients
+      )
 
       ingredients_string = file_fixture('ingredients_scan_4.txt').read
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 10, ingredients.size
+      assert_has_ingredients(
+        [
+          @almond_milk,
+          @ca_carb,
+          @nat_flavor,
+          @sea_salt,
+          @pot_cit,
+          @sunflower,
+          @gellan,
+          @vit_a,
+          @vit_d2,
+          @d_alpha
+        ],
+        ingredients
+      )
     end
 
     should 'get nutrition_facts_from_string' do
       nutrition_facts_string = file_fixture('nutrition_facts_scan_1.txt').read
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
       assert_equal 11, nutrition_facts.size
+      assert_has_nutrition_facts(
+        [
+          [@total_fat, 0],
+          [@sat_fat, 0],
+          [@trans_fat, 0],
+          [@poly_fat, 0],
+          [@mono_fat, 0],
+          [@cholesterol, 0],
+          [@sodium, 330],
+          [@carbs, 24],
+          [@fiber, 1],
+          [@sugars, 2],
+          [@protien, 2]
+        ],
+        nutrition_facts
+      )
 
       nutrition_facts_string = file_fixture('nutrition_facts_scan_2.txt').read
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
       assert_equal 9, nutrition_facts.size
+      assert_has_nutrition_facts(
+        [
+          [@total_fat, 5],
+          [@sat_fat, 3.5],
+          [@trans_fat, 0],
+          [@cholesterol, 20],
+          [@sodium, 15],
+          [@carbs, 1],
+          [@fiber, 0],
+          [@sugars, 1],
+          [@protien, 1]
+        ],
+        nutrition_facts
+      )
 
       nutrition_facts_string = file_fixture('nutrition_facts_scan_3.txt').read
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
-      assert_equal 6, nutrition_facts.size
+      assert_equal 7, nutrition_facts.size
+      assert_has_nutrition_facts(
+        [
+          [@short_sat_fat, 1],
+          [@trans_fat, 0],
+          [@short_cholesterol, 0],
+          [@sodium, 110],
+          [@short_carbs, 3],
+          [@sugars, 0],
+          [@protien, 2]
+        ],
+        nutrition_facts
+      )
 
       nutrition_facts_string = file_fixture('nutrition_facts_scan_4.txt').read
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
       assert_equal 12, nutrition_facts.size
+      assert_has_nutrition_facts(
+        [
+          [@total_fat, 2.5],
+          [@sat_fat, 0],
+          [@trans_fat, 0],
+          [@poly_fat, 0.5],
+          [@mono_fat, 1.5],
+          [@cholesterol, 0],
+          [@sodium, 170],
+          [@potassium, 160],
+          [@carbs, 1],
+          [@fiber, 1],
+          [@sugars, 0],
+          [@protien, 1]
+        ],
+        nutrition_facts
+      )
     end
 
     should 'get food_from_strings' do
+      nutrition_facts_string = file_fixture('nutrition_facts_scan_1.txt').read
+      ingredients_string = file_fixture('ingredients_scan_1.txt').read
+      result = FoodService.food_from_strings(42, nutrition_facts_string, ingredients_string)
+      assert_equal 42, result.upc
+      assert_equal 11, result.nutrition_facts.size
+      assert_equal 5, result.ingredients.size
+
+      nutrition_facts_string = file_fixture('nutrition_facts_scan_2.txt').read
+      ingredients_string = file_fixture('ingredients_scan_2.txt').read
+      result = FoodService.food_from_strings(43, nutrition_facts_string, ingredients_string)
+      assert_equal 43, result.upc
+      assert_equal 9, result.nutrition_facts.size
+      assert_equal 1, result.ingredients.size
+
+      nutrition_facts_string = file_fixture('nutrition_facts_scan_3.txt').read
+      ingredients_string = file_fixture('ingredients_scan_3.txt').read
+      result = FoodService.food_from_strings(44, nutrition_facts_string, ingredients_string)
+      assert_equal 44, result.upc
+      assert_equal 7, result.nutrition_facts.size
+      assert_equal 9, result.ingredients.size
+
+      nutrition_facts_string = file_fixture('nutrition_facts_scan_4.txt').read
+      ingredients_string = file_fixture('ingredients_scan_4.txt').read
+      result = FoodService.food_from_strings(45, nutrition_facts_string, ingredients_string)
+      assert_equal 45, result.upc
+      assert_equal 12, result.nutrition_facts.size
+      assert_equal 10, result.ingredients.size
     end
   end
 end
