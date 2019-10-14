@@ -20,26 +20,26 @@ class NutritionFactTest < ActiveSupport::TestCase
 
   should 'verify that name is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).name, nutrients(:added_sugars).name
-    assert_equal nutrition_facts(:food_one_protien).name, nutrients(:protien).name
+    assert_equal nutrition_facts(:food_one_protein).name, nutrients(:protein).name
   end
 
   should 'verify that description is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).description, nutrients(:added_sugars).description
-    assert_equal nutrition_facts(:food_one_protien).description, nutrients(:protien).description
+    assert_equal nutrition_facts(:food_one_protein).description, nutrients(:protein).description
   end
 
   should 'verify that source is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).source, nutrients(:added_sugars).source
-    assert_nil nutrition_facts(:food_one_protien).source
+    assert_nil nutrition_facts(:food_one_protein).source
   end
 
   should 'verify that unit is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).unit, nutrients(:added_sugars).unit
-    assert_equal nutrition_facts(:food_one_protien).unit, nutrients(:protien).unit
+    assert_equal nutrition_facts(:food_one_protein).unit, nutrients(:protein).unit
   end
 
   should 'verify that is_limiting is accessible' do
     assert_equal nutrition_facts(:food_one_added_sugars).is_limiting, nutrients(:added_sugars).is_limiting
-    assert_equal nutrition_facts(:food_one_protien).is_limiting, nutrients(:protien).is_limiting
+    assert_equal nutrition_facts(:food_one_protein).is_limiting, nutrients(:protein).is_limiting
   end
 end

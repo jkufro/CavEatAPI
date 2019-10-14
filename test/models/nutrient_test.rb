@@ -27,4 +27,25 @@ class NutrientTest < ActiveSupport::TestCase
     should_not allow_value(Ingredient.new).for(:source)
     should_not allow_value('google.com').for(:source)
   end
+
+  context 'scopes' do
+    should 'show that the search scope works' do
+      result = Nutrient.search(nil)
+      assert_equal 2, result.size
+
+      result = Nutrient.search('')
+      assert_equal 2, result.size
+
+      result = Nutrient.search('e')
+      assert_equal 2, result.size
+
+      result = Nutrient.search('sugar')
+      assert_equal 1, result.size
+      assert_equal nutrients(:added_sugars).name, result.first.name
+
+      result = Nutrient.search('pro')
+      assert_equal 1, result.size
+      assert_equal nutrients(:protein).name, result.first.name
+    end
+  end
 end

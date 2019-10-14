@@ -10,18 +10,18 @@ class FoodServiceTest < ActiveSupport::TestCase
     end
 
     should 'get nutrition_facts_from_string' do
-      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
+      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtein 20g\n"
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
       assert_equal 2, nutrition_facts.size
       assert_equal nutrients(:added_sugars).name, nutrition_facts.first.name
       assert_equal 5, nutrition_facts.first.amount.to_i
-      assert_equal nutrients(:protien).name, nutrition_facts.second.name
+      assert_equal nutrients(:protein).name, nutrition_facts.second.name
       assert_equal 20, nutrition_facts.second.amount.to_i
     end
 
     should 'get food_from_strings' do
       upc = 6612381239
-      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
+      nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtein 20g\n"
       ingredients_string = "ingredient one\n (Composition for ingredient one.), Ingredient Two [Composition For Ingredient Two.]"
       food = FoodService.food_from_strings(upc, nutrition_facts_string, ingredients_string)
       assert_equal 2, food.nutrition_facts.size
@@ -62,7 +62,6 @@ class FoodServiceTest < ActiveSupport::TestCase
       @short_carbs = Nutrient.create(name: 'Total Carb.', unit: 'g', description: '', is_limiting: false)
       @fiber = Nutrient.create(name: 'Dietary Fiber', unit: 'g', description: '', is_limiting: false)
       @sugars = Nutrient.create(name: 'Sugars', unit: 'g', description: '', is_limiting: false)
-      @protien = Nutrient.create(name: 'Protein', unit: 'g', description: '', is_limiting: false)
 
       @cult_cream = Ingredient.create(name: 'Cultured Cream', composition: '')
       @wheat = Ingredient.create(name: 'Enriched Wheat Flour', composition: '(Flour, Niacin, Reduced Iron, Thiamin Mononitrate, Riboflavin, Folic Acid)')
@@ -103,7 +102,6 @@ class FoodServiceTest < ActiveSupport::TestCase
       @short_carbs.delete
       @fiber.delete
       @sugars.delete
-      @protien.delete
 
       @cult_cream.delete
       @wheat.delete
@@ -210,7 +208,7 @@ class FoodServiceTest < ActiveSupport::TestCase
           [@carbs, 24],
           [@fiber, 1],
           [@sugars, 2],
-          [@protien, 2]
+          [nutrients(:protein), 2]
         ],
         nutrition_facts
       )
@@ -228,7 +226,7 @@ class FoodServiceTest < ActiveSupport::TestCase
           [@carbs, 1],
           [@fiber, 0],
           [@sugars, 1],
-          [@protien, 1]
+          [nutrients(:protein), 1]
         ],
         nutrition_facts
       )
@@ -244,7 +242,7 @@ class FoodServiceTest < ActiveSupport::TestCase
           [@sodium, 110],
           [@short_carbs, 3],
           [@sugars, 0],
-          [@protien, 2]
+          [nutrients(:protein), 2]
         ],
         nutrition_facts
       )
@@ -265,7 +263,7 @@ class FoodServiceTest < ActiveSupport::TestCase
           [@carbs, 1],
           [@fiber, 1],
           [@sugars, 0],
-          [@protien, 1]
+          [nutrients(:protein), 1]
         ],
         nutrition_facts
       )

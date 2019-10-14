@@ -5,7 +5,7 @@ food_one_added_sugars:
   nutrient: added_sugars
   amount: 5
 
-food_one_protien:
+food_one_protein:
   food_id: 1
-  nutrient: protien
+  nutrient: protein
   amount: 2.5

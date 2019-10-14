@@ -2,7 +2,11 @@
 
 = render partial: 'nutrients/actions', locals: { nutrient: @nutrient }
 
-%h2
-  = number_with_delimiter(@num_records, :delimiter => ',') + ' Nutrients'
+.row.no-pad.justify-content-between
+  .col-4
+    %h2
+      = number_with_delimiter(@num_records, :delimiter => ',') + ' Nutrients'
+  .col-4
+    = render partial: 'partials/search'
 
 = render partial: 'nutrients/table', locals: { nutrients: @nutrients }
