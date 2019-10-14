@@ -50,10 +50,10 @@ class FoodService
     def self.get_tentative_ingredients_from_string(ingredients_string)
       tentative_ingredients = []
       ingredients_string.gsub!("\n", " ")
-      ingredients_string = ingredients_string.titleize
-      on_and_after_index = ingredients_string.index('Ingredients:')
+      ingredients_string = ingredients_string.downcase
+      on_and_after_index = ingredients_string.index('ingredients:')
       ingredients_string = ingredients_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
-      ingredients_string.gsub!('Ingredients:', '')
+      ingredients_string.gsub!('ingredients:', '')
 
       # remove trailing '.' if exists
       ingredients_string.chop! if ingredients_string.end_with?('.')
@@ -88,7 +88,6 @@ class FoodService
       ingredient_string.chop! while ingredient_string.end_with?('.')
       ingredient_string.chop! while ingredient_string.end_with?('*')
       ingredient_string.strip!
-      ingredient_string = ingredient_string.titleize
 
       # split up the name and composition based on first (, {, or [
       split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
@@ -96,8 +95,8 @@ class FoodService
       ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
       return Ingredient.new(
-        name: ingredient_name.strip.titleize,
-        composition: ingredient_composition.strip.titleize
+        name: ingredient_name.strip,
+        composition: ingredient_composition.strip
       )
     end
 end

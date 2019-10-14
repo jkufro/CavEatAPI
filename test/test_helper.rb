@@ -8,6 +8,9 @@ require_relative '../config/environment'
 require 'rails/test_help'
 require "minitest/rails"
 
+# load extension libraries https://github.com/colszowka/simplecov/issues/221
+Dir[File.join(Rails.root, "lib", "core_ext", "*.rb")].each {|l| puts load l }
+
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"

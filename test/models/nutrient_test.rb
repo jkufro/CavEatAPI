@@ -6,7 +6,7 @@ class NutrientTest < ActiveSupport::TestCase
   end
 
   context 'basic validations' do
-    should validate_uniqueness_of(:name)
+    should validate_uniqueness_of(:name).case_insensitive
     should validate_presence_of(:name)
     should validate_length_of(:name).is_at_least(1)
 

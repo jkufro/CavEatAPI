@@ -4,7 +4,7 @@ require 'set'
 class FoodServiceTest < ActiveSupport::TestCase
   context 'basic tests' do
     should 'get ingredients_from_string' do
-      ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
+      ingredients_string = "ingredient one\n (Composition for ingredient one.), Ingredient Two [Composition For Ingredient Two.]"
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 2, ingredients.size
     end
@@ -22,7 +22,7 @@ class FoodServiceTest < ActiveSupport::TestCase
     should 'get food_from_strings' do
       upc = 6612381239
       nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtien 20g\n"
-      ingredients_string = "ingredient_one\n (Composition for ingredient_one.), Ingredient Two [Composition For Ingredient Two.]"
+      ingredients_string = "ingredient one\n (Composition for ingredient one.), Ingredient Two [Composition For Ingredient Two.]"
       food = FoodService.food_from_strings(upc, nutrition_facts_string, ingredients_string)
       assert_equal 2, food.nutrition_facts.size
       assert_equal 2, food.ingredients.size
@@ -87,7 +87,7 @@ class FoodServiceTest < ActiveSupport::TestCase
       @gellan = Ingredient.create(name: 'Gellan Gum', composition: '')
       @vit_a = Ingredient.create(name: 'Vitamin A Palmitate', composition: '')
       @vit_d2 = Ingredient.create(name: 'Vitamin D2', composition: '')
-      @d_alpha = Ingredient.create(name: 'D Alpha Tocopherol', composition: '(Natural Vitamin E)')
+      @d_alpha = Ingredient.create(name: 'D-ALPHA-TOCOPHEROL', composition: '(Natural Vitamin E)')
     end
 
     teardown do
@@ -100,6 +100,7 @@ class FoodServiceTest < ActiveSupport::TestCase
       @sodium.delete
       @potassium.delete
       @carbs.delete
+      @short_carbs.delete
       @fiber.delete
       @sugars.delete
       @protien.delete

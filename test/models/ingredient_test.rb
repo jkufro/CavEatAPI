@@ -7,7 +7,7 @@ class IngredientTest < ActiveSupport::TestCase
   end
 
   context 'basic validations' do
-    should validate_uniqueness_of(:name).scoped_to(:composition).case_insensitive
+    should validate_uniqueness_of(:name).scoped_to(:composition).ignoring_case_sensitivity
     should validate_presence_of(:name)
     should validate_length_of(:name).is_at_least(1)
   end

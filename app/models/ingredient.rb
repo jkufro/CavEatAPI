@@ -2,10 +2,21 @@ class Ingredient < ApplicationRecord
   has_many :food_ingredients
   has_many :foods, through: :food_ingredients
 
-  validates_uniqueness_of :name, scope: :composition, :case_sensitive => false
+  # before_validation lambda { self.name = self.name&.capitalize_first_letters }
+  # before_validation lambda { self.composition = self.composition&.capitalize_first_letters }
+
+  validates_uniqueness_of :name, scope: :composition, case_sensitive: false
   validates_presence_of :name
   validates_length_of :name, minimum: 1, allow_blank: false
   validates :source, source: true, allow_blank: true
+
+  def name=(value)
+    super(value&.capitalize_first_letters)
+  end
+
+  def composition=(value)
+    super(value&.capitalize_first_letters)
+  end
 
   scope :by_name, ->(name) {
     where(name: name)
@@ -18,14 +29,14 @@ class Ingredient < ApplicationRecord
   # in the format [['name', 'composition'], ...]
   scope :by_name_composition_pairs, ->(pairs) {
     return if pairs.empty?
-    query = '(LOWER(name) = ? AND LOWER(composition) = ?)'
+    query = '(name = ? AND composition = ?)'
 
     pairs.each_with_index do |pair, indx|
       next if indx == 0
-      query += ' OR (LOWER(name) = ? AND LOWER(composition) = ?)'
+      query += ' OR (name = ? AND composition = ?)'
     end
 
-    where(query, *pairs.flatten.map(&:downcase))
+    where(query, *pairs.flatten.map(&:capitalize_first_letters))
   }
 
   scope :search, ->(search_term) {
@@ -38,7 +49,7 @@ class Ingredient < ApplicationRecord
 
   def hash
     return calculated_hash if calculated_hash
-    calculated_hash = [name.downcase, composition&.downcase].hash
+    calculated_hash = [name&.capitalize_first_letters, composition&.capitalize_first_letters].hash
   end
 
   def ==(o)
