@@ -189,7 +189,6 @@ namespace :db do
       ingredient_string.chop! while ingredient_string.end_with?('.')
       ingredient_string.chop! while ingredient_string.end_with?('*')
       ingredient_string.strip!
-      ingredient_string = ingredient_string.titleize
 
       # split up the name and composition based on first (, {, or [
       split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
@@ -197,11 +196,11 @@ namespace :db do
       ingredient_composition = split_index ? ingredient_string.slice(split_index, ingredient_string.length + 1) : ''
 
       ingredient = Ingredient.new(
-        name: ingredient_name.strip.titleize,
-        composition: ingredient_composition.strip.titleize,
+        name: ingredient_name.strip,
+        composition: ingredient_composition.strip,
         is_warning: false
       )
-      already_existing_ingredient = all_ingredients[ingredient]
+      already_existing_ingredient = all_ingredients[ingredient]  # check the Set
       if already_existing_ingredient
         ingredient = already_existing_ingredient
       else
@@ -230,7 +229,7 @@ namespace :db do
 
         while row = csv.shift
           food = all_foods[row[id_col].to_i]
-          food.name = row[name_col].titleize if food
+          food.name = row[name_col] if food
           num_foods += 1
           puts "\t#{num_foods} Food names read in #{(Time.now - start_time).round(2)} seconds" if num_foods % 10000 == 0
         end
