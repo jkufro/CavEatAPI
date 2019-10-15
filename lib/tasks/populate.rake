@@ -22,75 +22,20 @@ namespace :db do
     food_nutrient_file_path = 'lib/data/trimmed/food_nutrient.csv'
 
     if Rails.env == 'production' || ENV['USE_FULL'] == 'true'
-      nutrient_file_path = 'lib/data/full/nutrient.csv'
+      # nutrient_file_path = 'lib/data/full/nutrient.csv'
       branded_food_file_path = 'lib/data/full/branded_food.csv'
       food_file_path = 'lib/data/full/food.csv'
       food_nutrient_file_path = 'lib/data/full/food_nutrient.csv'
-    end
-
-    def create_missing_nutritents
-      puts 'Creating missing Nutrients...'
-      # Nutrient.create(
-      #   name: 'Total Fat',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Saturated Fat',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: true
-      # )
-      # Nutrient.create(
-      #   name: 'Trans Fat',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: true
-      # )
-      # Nutrient.create(
-      #   name: 'Polyunsaturated Fat',
-      #   unit: '',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Monounsaturated Fat',
-      #   unit: '',
-      #   description: 'g',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Sodium',
-      #   unit: 'mg',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Total Carbohydrate',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Dietary Fiber',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      # Nutrient.create(
-      #   name: 'Sugars',
-      #   unit: 'g',
-      #   description: '',
-      #   is_limiting: false
-      # )
-      puts "Done creating missing Nutrients.\n\n"
     end
 
     def load_nutrients(nutrient_file_path)
       id_col = 0
       name_col = 1
       unit_col = 2
+      alias_col = 5
+      description_col = 6
+      source_col = 7
+      is_limiting_col = 8
 
       puts "Adding Nutrients to database from #{nutrient_file_path}..."
       File.open(nutrient_file_path, 'r') do |file|
@@ -101,10 +46,11 @@ namespace :db do
             Nutrient.create(
               id: row[id_col],
               name: row[name_col],
-              description: nil,
-              source: nil,
+              alias: row[alias_col],
+              description: row[description_col],
+              source: row[source_col],
               unit: row[unit_col].downcase,
-              is_limiting: false
+              is_limiting: row[is_limiting_col]
             )
           end
         end
@@ -238,7 +184,6 @@ namespace :db do
     script_start_time = Time.now
 
     load_nutrients(nutrient_file_path)
-    create_missing_nutritents()
     result = get_foods(branded_food_file_path)
     all_foods, all_ingredients = result[0], result[1]
     update_food_names(food_file_path, all_foods)
