@@ -39,6 +39,8 @@ en:
     destroy:
       success: 'Successfully destroyed food.'
   nutrients:
+    name_description: '(Used in OCR parsing to find nutrients)'
+    alias_description: '(If present, will be the `common_name` attribute in API JSON)'
     update:
       success: 'Successfully updated nutrient.'
       failure: 'Could not update nutrient.'

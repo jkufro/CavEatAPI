@@ -9,12 +9,16 @@
     %p.lead
       %strong ID:
       = @nutrient.id
-    %p.lead
+    %p.lead.no-bottom-margin
       %strong Name:
       = @nutrient.name
-    %p.lead
+      %p.small
+        = I18n.t('nutrients.name_description')
+    %p.lead.no-bottom-margin
       %strong Alias:
       = @nutrient.alias || 'N/A'
+      %p.small
+        = I18n.t('nutrients.alias_description')
     %p.lead
       %strong Unit:
       = @nutrient.unit
