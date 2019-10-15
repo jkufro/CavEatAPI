@@ -28,6 +28,24 @@ class NutrientTest < ActiveSupport::TestCase
     should_not allow_value('google.com').for(:source)
   end
 
+  context 'alias' do
+    should 'should show that common_name works' do
+      assert_nil nutrients(:added_sugars).alias
+      assert_equal nutrients(:added_sugars).name, nutrients(:added_sugars).common_name
+
+      nutrients(:added_sugars).alias = ''
+      assert_nil nutrients(:added_sugars).alias
+      assert_equal nutrients(:added_sugars).name, nutrients(:added_sugars).common_name
+
+      nutrients(:added_sugars).alias = "  \n \t"
+      assert_nil nutrients(:added_sugars).alias
+      assert_equal nutrients(:added_sugars).name, nutrients(:added_sugars).common_name
+
+      nutrients(:added_sugars).alias = 'Wow Sugar'
+      assert_equal nutrients(:added_sugars).alias, nutrients(:added_sugars).common_name
+    end
+  end
+
   context 'scopes' do
     should 'show that the search scope works' do
       result = Nutrient.search(nil)

@@ -18,9 +18,9 @@ class NutritionFactTest < ActiveSupport::TestCase
     should_not allow_value(-0.0000000001).for(:amount)
   end
 
-  should 'verify that name is accessible' do
-    assert_equal nutrition_facts(:food_one_added_sugars).name, nutrients(:added_sugars).name
-    assert_equal nutrition_facts(:food_one_protein).name, nutrients(:protein).name
+  should 'verify that common_name is accessible' do
+    assert_equal nutrition_facts(:food_one_added_sugars).common_name, nutrients(:added_sugars).common_name
+    assert_equal nutrition_facts(:food_one_protein).common_name, nutrients(:protein).common_name
   end
 
   should 'verify that description is accessible' do

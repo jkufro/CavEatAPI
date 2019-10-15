@@ -12,9 +12,19 @@ class Nutrient < ApplicationRecord
     super(value&.capitalize_first_letters)
   end
 
+  def alias=(value)
+    value.strip! if value.present?
+    value = nil unless value.present?
+    super(value&.capitalize_first_letters)
+  end
+
   scope :alphabetical, -> { order(:name) }
 
   scope :search, ->(search_term) {
     where("nutrients.name ILIKE ?", "%#{search_term}%")
   }
+
+  def common_name
+    self.alias || self.name
+  end
 end

@@ -30,60 +30,60 @@ namespace :db do
 
     def create_missing_nutritents
       puts 'Creating missing Nutrients...'
-      Nutrient.create(
-        name: 'Total Fat',
-        unit: 'g',
-        description: '',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Saturated Fat',
-        unit: 'g',
-        description: '',
-        is_limiting: true
-      )
-      Nutrient.create(
-        name: 'Trans Fat',
-        unit: 'g',
-        description: '',
-        is_limiting: true
-      )
-      Nutrient.create(
-        name: 'Polyunsaturated Fat',
-        unit: '',
-        description: '',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Monounsaturated Fat',
-        unit: '',
-        description: 'g',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Sodium',
-        unit: 'mg',
-        description: '',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Total Carbohydrate',
-        unit: 'g',
-        description: '',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Dietary Fiber',
-        unit: 'g',
-        description: '',
-        is_limiting: false
-      )
-      Nutrient.create(
-        name: 'Sugars',
-        unit: 'g',
-        description: '',
-        is_limiting: false
-      )
+      # Nutrient.create(
+      #   name: 'Total Fat',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Saturated Fat',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: true
+      # )
+      # Nutrient.create(
+      #   name: 'Trans Fat',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: true
+      # )
+      # Nutrient.create(
+      #   name: 'Polyunsaturated Fat',
+      #   unit: '',
+      #   description: '',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Monounsaturated Fat',
+      #   unit: '',
+      #   description: 'g',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Sodium',
+      #   unit: 'mg',
+      #   description: '',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Total Carbohydrate',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Dietary Fiber',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: false
+      # )
+      # Nutrient.create(
+      #   name: 'Sugars',
+      #   unit: 'g',
+      #   description: '',
+      #   is_limiting: false
+      # )
       puts "Done creating missing Nutrients.\n\n"
     end
 

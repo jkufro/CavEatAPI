@@ -1,7 +1,7 @@
 class NutritionFact < ApplicationRecord
   belongs_to :nutrient
   belongs_to :food
-  delegate :name, to: :nutrient, prefix: false, allow_nil: false
+  delegate :common_name, to: :nutrient, prefix: false, allow_nil: false
   delegate :description, to: :nutrient, prefix: false, allow_nil: false
   delegate :source, to: :nutrient, prefix: false, allow_nil: false
   delegate :unit, to: :nutrient, prefix: false, allow_nil: false

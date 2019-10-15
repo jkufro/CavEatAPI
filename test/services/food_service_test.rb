@@ -13,9 +13,9 @@ class FoodServiceTest < ActiveSupport::TestCase
       nutrition_facts_string = "\nAdded Sugars\n 5gother extraneous textProtein 20g\n"
       nutrition_facts = FoodService.nutrition_facts_from_string(nutrition_facts_string)
       assert_equal 2, nutrition_facts.size
-      assert_equal nutrients(:added_sugars).name, nutrition_facts.first.name
+      assert_equal nutrients(:added_sugars).common_name, nutrition_facts.first.common_name
       assert_equal 5, nutrition_facts.first.amount.to_i
-      assert_equal nutrients(:protein).name, nutrition_facts.second.name
+      assert_equal nutrients(:protein).common_name, nutrition_facts.second.common_name
       assert_equal 20, nutrition_facts.second.amount.to_i
     end
 
@@ -56,8 +56,8 @@ class FoodServiceTest < ActiveSupport::TestCase
     assert_equal Set.new(expected.map(&:first)), Set.new(result.map(&:nutrient))
     expected_hash = {}
     result_hash = {}
-    result.each { |r| result_hash[r.name] = r }
-    expected.each { |e| expected_hash[e.first.name] = e.second }
+    result.each { |r| result_hash[r.common_name] = r }
+    expected.each { |e| expected_hash[e.first.common_name] = e.second }
     expected_hash.each do |key, value|
       assert_equal value, result_hash[key].amount
     end
