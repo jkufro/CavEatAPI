@@ -1,5 +1,5 @@
 - if nutrients && nutrients.size > 0
-  %table.table
+  %table.table.table-hover
     %thead.thead-light
       %tr
         %th ID
@@ -10,11 +10,11 @@
         %th Limiting?
     %tbody
       - nutrients.each do |nutrient|
-        %tr
+        %tr.clickable{ 'onclick': "window.location = '#{nutrient_path(nutrient)}'" }
           %td
-            = nutrient.id
+            = link_to nutrient.id, nutrient_path(nutrient)
           %td
-            = link_to nutrient.name, nutrient_path(nutrient)
+            = nutrient.name
           %td
             = nutrient.description
           %td
