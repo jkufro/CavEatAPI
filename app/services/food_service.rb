@@ -1,6 +1,6 @@
 class FoodService
   def self.food_from_strings(upc, nutrition_facts_string, ingredients_string)
-    food = Food.new(name: 'Unnamed Food', upc: upc)
+    food = Food.new(id: 1, name: 'Unnamed Food', upc: upc)
     food.nutrition_facts = nutrition_facts_from_string(nutrition_facts_string)
     food.ingredients = ingredients_from_string(ingredients_string)
     return food
