@@ -50,7 +50,7 @@ namespace :db do
               description: row[description_col],
               source: row[source_col],
               unit: row[unit_col].downcase,
-              is_limiting: row[is_limiting_col]
+              is_limiting: row[is_limiting_col] || false
             )
           end
         end
