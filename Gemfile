@@ -3,10 +3,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
+gem 'activerecord-import'
+gem 'will_paginate', '~> 3.1.0'
+gem 'will_paginate-bootstrap4'
+gem 'barby', require: %w(barby barby/barcode/code_128 barby/outputter/html_outputter)
+gem 'simple_form'
+gem 'jquery-rails'
+gem 'bootstrap', '~> 4.3.1'
 gem 'fast_jsonapi'
-gem 'swagger-docs'
+gem 'swagger-blocks'
+gem 'swagger_ui_engine'
 gem 'pg'
-gem 'cancancan'
 gem "haml-rails", "~> 2.0"
 # gems for testing
 gem "rubocop-rails_config", require: false
@@ -67,6 +74,9 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
   gem 'simplecov'
+  gem 'shoulda', '3.6.0'
+  gem "minitest-rails", "~> 3.0"
+  gem 'rails-controller-testing'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

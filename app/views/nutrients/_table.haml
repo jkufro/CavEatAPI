@@ -1,0 +1,32 @@
+- if nutrients && nutrients.size > 0
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th ID
+        %th Name
+        %th Alias
+        %th Description
+        %th Source
+        %th Unit
+        %th Limiting?
+    %tbody
+      - nutrients.each do |nutrient|
+        %tr.clickable{ 'onclick': "window.location = '#{nutrient_path(nutrient)}'" }
+          %td
+            = link_to nutrient.id, nutrient_path(nutrient)
+          %td
+            = nutrient.name
+          %td
+            = nutrient.alias
+          %td
+            = nutrient.description
+          %td
+            = link_if_present(nutrient.source, 'Source', '')
+          %td
+            = nutrient.unit
+          %td
+            = nutrient.is_limiting ? 'Yes' : 'No'
+- else
+  %p.lead No Nutrients Available
+
+

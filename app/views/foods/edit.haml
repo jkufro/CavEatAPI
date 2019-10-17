@@ -1,0 +1,8 @@
+%h1
+  = @food.name || 'Unnamed Food'
+
+= render partial: 'foods/actions', locals: { food: @food }
+
+.row
+  .col
+    = render partial: 'foods/form', locals: { food: @food }

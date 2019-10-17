@@ -30,4 +30,49 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  source:
+    invalid: 'is not a valid URL in http:// or https:// format'
+  foods:
+    update:
+      success: 'Successfully updated food.'
+      failure: 'Could not update food.'
+    destroy:
+      success: 'Successfully destroyed food.'
+  nutrients:
+    name_description: '(Used in OCR parsing to find nutrients)'
+    alias_description: '(If present, will be the `common_name` attribute in API JSON)'
+    update:
+      success: 'Successfully updated nutrient.'
+      failure: 'Could not update nutrient.'
+    destroy:
+      success: 'Successfully destroyed nutrient.'
+  ingredients:
+    bulk_update:
+      confirm: "Are you sure you want to update %{num_records} Ingredients?"
+      success: "Successfully updated %{succeeded} Ingredients."
+      warning: "Could not update %{failed} Ingredients. %{succeeded} Ingredients were successfully updated."
+    update:
+      success: 'Successfully updated ingredient.'
+      failure: 'Could not update ingredient.'
+    destroy:
+      success: 'Successfully destroyed ingredient.'
+  users:
+    create:
+      success: 'Successfully created user.'
+      failure: 'Could not create user.'
+    update:
+      success: 'Successfully updated user.'
+      failure: 'Could not update user.'
+    destroy:
+      success: 'Successfully destroyed user.'
+  sessions:
+    create:
+      success: 'Logged in!'
+      failure: 'Username and/or password is invalid'
+    destroy:
+      success: 'Logged out!'
+    not_authorized: 'You must be logged in to do that!'
+  api:
+    vi:
+      foods:
+        not_found: 'Food not found.'

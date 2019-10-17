@@ -1,13 +1,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyText
-  unit: MyString
-  is_limiting: false
+added_sugars:
+  name: 'Added Sugars'
+  description: 'Description for added sugars.'
+  source: 'http://google.com/'
+  unit: "g"
+  is_limiting: true
 
-two:
-  name: MyString
-  description: MyText
-  unit: MyString
+protein:
+  name: 'Protein'
+  description: 'Description for protien.'
+  source: null
+  unit: 'g'
   is_limiting: false

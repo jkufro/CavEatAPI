@@ -1,0 +1,8 @@
+%h1
+  = @ingredient.name
+
+= render partial: 'ingredients/actions', locals: { ingredient: @ingredient }
+
+.row
+  .col
+    = render partial: 'ingredients/form', locals: { ingredient: @ingredient }

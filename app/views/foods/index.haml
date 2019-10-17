@@ -1,0 +1,14 @@
+%h1 Foods
+
+= render partial: 'foods/actions', locals: { food: @food }
+
+.row.no-pad.justify-content-between
+  .col-4
+    %h2
+      = number_with_delimiter(@num_records, :delimiter => ',') + ' Foods'
+  .col-4
+    = render partial: 'partials/search'
+
+= render partial: 'foods/table', locals: { foods: @foods }
+
+= will_paginate @foods, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

@@ -1,0 +1,7 @@
+.row
+  .col
+    = link_to 'All Ingredients', :ingredients, class: 'btn btn-primary'
+    - if ingredient
+      = link_to 'Show Ingredient', ingredient_path(ingredient), class: 'btn btn-info'
+      = link_to 'Edit Ingredient', edit_ingredient_path(ingredient), class: 'btn btn-secondary'
+      = link_to 'Destroy Ingredient', ingredient_path(ingredient), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" }

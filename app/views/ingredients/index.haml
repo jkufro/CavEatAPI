@@ -1,0 +1,16 @@
+%h1 Ingredients
+
+= render partial: 'ingredients/actions', locals: { ingredient: @ingredient }
+
+= render partial: 'ingredients/bulk_update', locals: { num_records: @num_records }
+
+.row.no-pad.justify-content-between
+  .col-4
+    %h2
+      = number_with_delimiter(@num_records, :delimiter => ',') + ' Ingredients'
+  .col-4
+    = render partial: 'partials/search'
+
+= render partial: 'ingredients/table', locals: { ingredients: @ingredients }
+
+= will_paginate @ingredients, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

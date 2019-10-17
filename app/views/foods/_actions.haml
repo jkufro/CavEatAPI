@@ -1,0 +1,7 @@
+.row
+  .col
+    = link_to 'All Foods', :foods, class: 'btn btn-primary'
+    - if food
+      = link_to 'Show Food', food_path(food), class: 'btn btn-info'
+      = link_to 'Edit Food', edit_food_path(food), class: 'btn btn-secondary'
+      = link_to 'Destroy Food', food_path(food), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" }

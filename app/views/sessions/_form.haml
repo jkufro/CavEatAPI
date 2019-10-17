@@ -1,0 +1,6 @@
+= form_tag(sessions_path) do
+  = label_tag 'Username', 'Username', class: 'marg-top'
+  = text_field_tag(:username, username, placeholder: 'jdoe', class: "form-control")
+  = label_tag 'Password', 'Password', class: 'marg-top'
+  = password_field_tag(:password, '', class: "form-control")
+  = submit_tag "Login", class: 'btn btn-primary marg-top'

@@ -1,0 +1,7 @@
+%h1 New User
+
+= render partial: 'users/actions', locals: { user: @user }
+
+.row
+  .col
+    = render partial: 'users/form', locals: { user: @user }

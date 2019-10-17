@@ -1,0 +1,8 @@
+%h1 Users
+
+= render partial: 'users/actions', locals: { user: @user }
+
+%h2
+  = number_with_delimiter(@num_records, :delimiter => ',') + ' Users'
+
+= render partial: 'users/table', locals: { users: @users }

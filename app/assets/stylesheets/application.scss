@@ -13,3 +13,37 @@
  *= require_tree .
  *= require_self
  */
+
+@import "bootstrap";
+
+.upc-barcode {
+  height: 100px;
+}
+
+.barby-cell.on {
+  background-color: black;
+}
+
+.row {
+  padding-bottom: 1.5em;
+}
+
+.row.no-pad {
+  padding-bottom: 0em;
+}
+
+.marg-top {
+  margin-top: 1.25em;
+}
+
+.no-bottom-margin {
+  margin-bottom: 0em;
+}
+
+#search-button {
+  margin-left: 1em;
+}
+
+.clickable {
+  cursor: pointer;
+}

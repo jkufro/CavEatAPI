@@ -1,9 +1,14 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  food_id: 1
-  ingredient_id: 1
+food_one_ingredient_one:
+  food: food_one
+  ingredient: ingredient_one
 
-two:
-  food_id: 1
-  ingredient_id: 1
+food_one_ingredient_two:
+  food: food_one
+  ingredient: ingredient_two
+
+food_two_ingredient_one:
+  food: food_two
+  ingredient: ingredient_one
+

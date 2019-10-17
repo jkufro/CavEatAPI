@@ -32,3 +32,6 @@
 
 # ignore code coverage
 coverage/
+
+# ignore full data dir to avoid git-lfs caps
+/lib/data/full/

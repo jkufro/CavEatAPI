@@ -1,0 +1,6 @@
+.row
+  .col
+    -# https://medium.com/@yassimortensen/simple-search-form-in-rails-8483739e4042
+    = form_tag(request.path, method: :get, class: 'form-inline') do
+      = text_field_tag(:search, params[:search], placeholder: 'search...', class: "form-control")
+      = submit_tag "Search", class: 'btn btn-secondary', id: 'search-button'

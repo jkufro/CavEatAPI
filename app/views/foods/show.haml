@@ -1,0 +1,24 @@
+%h1
+  = @food.name || 'Unnamed Food'
+
+= render partial: 'foods/actions', locals: { food: @food }
+
+.row
+  .col
+    %h2 Attributes
+    %p.lead
+      %strong ID:
+      = @food.id
+    %p.lead
+      %strong UPC:
+      = @food.upc
+      = html_upc(@food)
+    %p.lead
+      %strong Name:
+      = @food.name
+
+    %h2 Nutrition Facts
+    = render partial: 'nutrition_facts/table', locals: { nutrition_facts: @food.nutrition_facts }
+
+    %h2 Ingredients
+    = render partial: 'ingredients/table', locals: { ingredients: @food.ingredients }
