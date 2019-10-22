@@ -45,9 +45,17 @@ class FoodService
   def self.get_tentative_ingredients_from_string(ingredients_string)
     tentative_ingredients = []
     ingredients_string.strip!
+    ingredients_string.downcase!
     ingredients_string.gsub!("\n", " ")
-    ingredients_string.gsub!(/[†‡*]/, '')
-    ingredients_string = ingredients_string.downcase
+    ingredients_string.gsub!("  ", " ")
+    ingredients_string.gsub!(/[†‡*\(\)\[\]{}]/, '')
+    ingredients_string.gsub!(/contains \d% or less of[ :]/, '')
+    ingredients_string.gsub!(/contains \d% or less(:|( -))/, '')
+    ingredients_string.gsub!(/contains less than \d% ?(of)?:? ?/, '')
+    ingredients_string.gsub!(/(and )?less than \d%( of( the following:? |: )?|:)?/, '')
+    ingredients_string.gsub!(/\d% or less of (the following:? )?/, '')
+    ingredients_string.gsub!(/contains \w+ percent or less of:?/, '')
+    ingredients_string.gsub!(/(\d{1,3}\.)?\d{1,3}\s?%/, '')
     on_and_after_index = ingredients_string.index('ingredients:')
     ingredients_string = ingredients_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
     ingredients_string.gsub!('ingredients:', '')
@@ -82,9 +90,12 @@ class FoodService
     def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
       nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/^\s*<?(\d+(.\d+)?)#{unit}/)&.captures&.first&.to_f
     end
+
     def self.build_ingredient_from_string(ingredient_string)
       # cleanup string
       ingredient_string.strip!
+      ingredient_string.gsub!(/(\w* )*((each of )|contains one or more of )?the following:? /, '')
+      ingredient_string.gsub!(/^and(\/or)? /, '')
       ingredient_string.chop! while ingredient_string.end_with?('.')
       ingredient_string.sub!('.', '') while ingredient_string.start_with?('*')
       ingredient_string.strip!
