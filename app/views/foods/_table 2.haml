@@ -1,0 +1,20 @@
+- if foods && foods.size > 0
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th ID
+        %th UPC
+        %th Name
+    %tbody
+      - foods.each do |food|
+        %tr.clickable{ 'onclick': "window.location = '#{food_path(food)}'" }
+          %td
+            = link_to food.id, food_path(food)
+          %td
+            = food.upc
+          %td
+            = food.name
+- else
+  %p.lead No Foods Available
+
+

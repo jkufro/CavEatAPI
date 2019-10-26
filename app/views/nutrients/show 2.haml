@@ -1,0 +1,33 @@
+%h1
+  = @nutrient.name
+
+= render partial: 'nutrients/actions', locals: { nutrient: @nutrient }
+
+.row
+  .col
+    %h2 Attributes
+    %p.lead
+      %strong ID:
+      = @nutrient.id
+    %p.lead.no-bottom-margin
+      %strong Name:
+      = @nutrient.name
+      %p.small
+        = I18n.t('nutrients.name_description')
+    %p.lead.no-bottom-margin
+      %strong Alias:
+      = @nutrient.alias || 'N/A'
+      %p.small
+        = I18n.t('nutrients.alias_description')
+    %p.lead
+      %strong Unit:
+      = @nutrient.unit
+    %p.lead
+      %strong Description:
+      = @nutrient.description || 'N/A'
+    %p.lead
+      %strong Source:
+      = link_if_present(@nutrient.source)
+    %p.lead
+      %strong Limiting?:
+      = @nutrient.is_limiting ? 'Yes' : 'No'
