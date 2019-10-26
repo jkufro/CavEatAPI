@@ -1,8 +1,0 @@
-= simple_form_for(nutrient, html: { class: '' }) do |form|
-  = form.input :name, hint: I18n.t('nutrients.name_description')
-  = form.input :alias, hint: I18n.t('nutrients.alias_description')
-  = form.input :unit
-  = form.input :description
-  = form.input :source
-  = form.input :is_limiting
-  = form.button :submit, class: "btn btn-success"
