@@ -1,6 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.2"
 
+set :rvm_custom_path, '/usr/share/rvm/'
+
 set :application, "CavEatAPI"
 set :repo_url, "git@github.com:jkufro/CavEatAPI.git"
 set :branch, ENV['BRANCH'] if ENV['BRANCH']
