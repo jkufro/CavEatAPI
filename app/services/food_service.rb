@@ -5,7 +5,9 @@ class FoodService
       nutrition_facts_string: nutrition_facts_string,
       ingredients_string: ingredients_string
     ) if create_record
-    food = Food.new(id: 1, name: 'Unnamed Food', upc: upc)
+    food = Food.new(id: 1, name: 'Unnamed Food', upc: upc || 1)
+    return food if nutrition_facts_string.nil? || nutrition_facts_string.strip == ""
+    return food if ingredients_string.nil? || ingredients_string.strip == ""
     food.nutrition_facts = nutrition_facts_from_string(nutrition_facts_string)
     food.ingredients = ingredients_from_string(ingredients_string)
     return food
