@@ -1,0 +1,2 @@
+module StringRequestsHelper
+end

@@ -1,0 +1,5 @@
+.row
+  .col
+    = link_to 'All Requests', :string_requests, class: 'btn btn-primary'
+    - if string_request
+      = link_to 'Show Request', string_request_path(string_request), class: 'btn btn-info'

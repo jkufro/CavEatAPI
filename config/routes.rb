@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :nutrients, only: [:index, :show, :update, :edit, :destroy]
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
+  resources :string_requests, only: [:index, :show,]
   get 'login', to: 'sessions#new', as: :login
   get 'logout', to: 'sessions#destroy', as: :logout
 

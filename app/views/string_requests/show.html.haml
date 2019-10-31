@@ -1,0 +1,26 @@
+%h1
+  = @string_request.upc || 'No UPC Request'
+
+= render partial: 'string_requests/actions', locals: { string_request: @string_request }
+
+.row
+  .col
+    %h2 Attributes
+    %p.lead
+      %strong ID:
+      = @string_request.id
+    %p.lead
+      %strong UPC:
+      = @string_request.upc
+      = html_upc(@string_request)
+    %h3 Nutrition Facts String
+    = render partial: 'string_requests/text_block', locals: { text: @string_request.nutrition_facts_string }
+
+    %h3 Ingredients String
+    = render partial: 'string_requests/text_block', locals: { text: @string_request.ingredients_string }
+
+    %h2 Nutrition Facts
+    = render partial: 'nutrition_facts/table', locals: { nutrition_facts: @string_request.food.nutrition_facts }
+
+    %h2 Ingredients
+    = render partial: 'ingredients/table', locals: { ingredients: @string_request.food.ingredients }
