@@ -72,6 +72,8 @@ en:
     destroy:
       success: 'Logged out!'
     not_authorized: 'You must be logged in to do that!'
+  string_requests:
+    empty_string: '(Empty String)'
   api:
     vi:
       foods:
