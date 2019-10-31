@@ -59,10 +59,23 @@ namespace :db do
     end
 
 
+    def get_nutrient_factor(row)
+      serving_size_col = 4
+      serving_size_unit_col = 5
+      if row[serving_size_unit_col] == "g"
+        #byebug
+        return Float(row[serving_size_col]) / 100  # all nutrition facts based on 100g
+      else  # could be 'g' or 'ml'
+        return 1
+      end
+    end
+
+
     def get_foods(branded_food_file_path)
       all_foods = Hash.new(nil)
       all_food_ingredients = []
       all_ingredients = Hash.new(nil)
+      food_nutrient_factors = Hash.new(1)
       num_foods = 0
       start_time = Time.now
 
@@ -78,6 +91,8 @@ namespace :db do
         csv = CSV.new(file, headers: true)
 
         while row = csv.shift
+          food_nutrient_factors[row[id_col]] = get_nutrient_factor(row)
+
           food = Food.new(
             id: row[id_col],
             upc: row[upc_col],
@@ -116,7 +131,7 @@ namespace :db do
       FoodIngredient.import [:food_id, :ingredient_id], all_food_ingredients, validate: false
 
       puts "Done parsing Foods and Ingredients.\n\n"
-      return [all_foods, all_ingredients]
+      return [all_foods, all_ingredients, food_nutrient_factors]
     end
 
 
@@ -142,7 +157,7 @@ namespace :db do
     end
 
 
-    def import_nutrition_facts(food_nutrient_file_path)
+    def import_nutrition_facts(food_nutrient_file_path, food_nutrient_factors)
       batch_nutrition_facts = []
 
       id_col = 0
@@ -159,11 +174,14 @@ namespace :db do
         csv = CSV.new(file, headers: true)
 
         while row = csv.shift
+          amount = (food_nutrient_factors[row[food_id_col]] * Float(row[amount_col])).round(2)
+          amount = amount.round if amount % 1 >= 0.9 || amount % 1 <= 0.1
+
           batch_nutrition_facts << NutritionFact.new(
             id: row[id_col],
             food_id: row[food_id_col],
             nutrient_id: row[nutrient_id_col],
-            amount: row[amount_col],
+            amount: amount,
           )
           num_facts += 1
           if num_facts % batch_size == 0
@@ -185,7 +203,7 @@ namespace :db do
 
     load_nutrients(nutrient_file_path)
     result = get_foods(branded_food_file_path)
-    all_foods, all_ingredients = result[0], result[1]
+    all_foods, all_ingredients, food_nutrient_factors = result[0], result[1], result[2]
     update_food_names(food_file_path, all_foods)
     result = nil
 
@@ -199,7 +217,7 @@ namespace :db do
     puts "\tImported Foods."
     puts "Imported all Foods and Ingredients in #{Time.now - import_start_time} seconds\n\n"
 
-    import_nutrition_facts(food_nutrient_file_path)
+    import_nutrition_facts(food_nutrient_file_path, food_nutrient_factors)
 
     puts "Database populated in #{Time.now - script_start_time}"
   end
