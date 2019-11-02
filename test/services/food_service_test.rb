@@ -4,6 +4,7 @@ require 'set'
 class FoodServiceTest < ActiveSupport::TestCase
   context 'basic tests' do
     should 'get ingredients_from_string' do
+      byebug
       ingredients_string = "ingredient one\n (Composition for ingredient one.), Ingredient Two [Composition For Ingredient Two.]"
       ingredients = FoodService.ingredients_from_string(ingredients_string)
       assert_equal 2, ingredients.size
