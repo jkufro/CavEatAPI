@@ -119,25 +119,24 @@ class FoodService
     def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
       nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/^\s*<?(\d+(.\d+)?)#{unit}/)&.captures&.first&.to_f
     end
+
     def self.build_ingredient_from_string(ingredient_string)
       # cleanup string
-      ingredient_string.strip!
-      ingredient_string.gsub!(/.*:/, '')
-      ingredient_string.gsub!(/(\w* )*((each of )|contains one or more of )?the following:? /, '')
-      ingredient_string.chop! while ingredient_string.end_with?('!')
-      ingredient_string.chop! while ingredient_string.end_with?('/')
-      ingredient_string.chop! while ingredient_string.end_with?('"')
-      ingredient_string.chop! while ingredient_string.end_with?('*')
-      ingredient_string.chop! while ingredient_string.end_with?('+')
-      ingredient_string.chop! while ingredient_string.end_with?('-')
-      ingredient_string.chop! while ingredient_string.end_with?('.')
-      ingredient_string.sub!('.', '') while ingredient_string.start_with?('.')
-      ingredient_string.sub!('*', '') while ingredient_string.start_with?('*')
-      ingredient_string.sub!('"', '') while ingredient_string.start_with?('"')
-      ingredient_string.sub!('and ', '') while ingredient_string.start_with?('and ')
-      ingredient_string.sub!('with ', '') while ingredient_string.start_with?('with ')
-      ingredient_string.sub!('ingredients consist of ', '') if ingredient_string.start_with?('ingredients consist of ')
-      ingredient_string.strip!
+      was_processed = true
+      last_string = ingredient_string.dup
+      while was_processed do
+        ingredient_string.strip!
+        ingredient_string.gsub!(/.*:/, '')
+        ingredient_string.gsub!(/(\w* )*((each of )|contains one or more of )?the following:? /, '')
+        ingredient_string.chop! while ingredient_string.end_with?('!', '/', '"', "'", '*', '+', '-', '.', '+')
+        ingredient_string.sub!(/[\.\*"'&#+]/, '') while ingredient_string.start_with?(/[\.\*"'&#+]/)
+        ingredient_string.sub!('and ', '') while ingredient_string.start_with?('and ')
+        ingredient_string.sub!('with ', '') while ingredient_string.start_with?('with ')
+        ingredient_string.sub!('ingredients consist of ', '') if ingredient_string.start_with?('ingredients consist of ')
+
+        was_processed = ingredient_string != last_string
+        last_string = ingredient_string.dup
+      end
 
       # split up the name and composition based on first (, {, or [
       split_index = [ingredient_string.index('('), ingredient_string.index('{'), ingredient_string.index('[')].compact.min
