@@ -63,7 +63,6 @@ namespace :db do
       serving_size_col = 4
       serving_size_unit_col = 5
       if row[serving_size_unit_col] == "g"
-        #byebug
         return Float(row[serving_size_col]) / 100  # all nutrition facts based on 100g
       else  # could be 'g' or 'ml'
         return 1

@@ -3,7 +3,7 @@ require 'set'
 
 class FoodServiceTest < ActiveSupport::TestCase
   context 'tentative ingredients' do
-    should 'show that get_tentative_ingredients_from_string works'do
+    should 'show that get_tentative_ingredients_from_string works' do
       num_fixtures = 67
       strategy = 's2_solutions'
       (1..num_fixtures).each do |num|

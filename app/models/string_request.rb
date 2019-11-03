@@ -1,5 +1,4 @@
 class StringRequest < ApplicationRecord
-
   scope :reverse_chronological, -> { order(created_at: :desc) }
 
   def food
