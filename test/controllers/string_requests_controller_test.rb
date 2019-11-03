@@ -1,14 +1,21 @@
 require 'test_helper'
 
 class StringRequestsControllerTest < ActionDispatch::IntegrationTest
-  test "should get index" do
-    get string_requests_index_url
+  setup do
+    login_user_one
+  end
+
+  teardown do
+    logout
+  end
+
+  should 'get index' do
+    get string_requests_path
     assert_response :success
   end
 
-  test "should get show" do
-    get string_requests_show_url
+  should 'get show' do
+    get string_request_path(string_requests(:one).id)
     assert_response :success
   end
-
 end
