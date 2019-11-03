@@ -74,7 +74,7 @@ class FoodService
     ingredients_string.gsub!(/<?(\d{1,})?[\.,]?\d{1,}\s?(%|(g)|(mg\/kg)|(mg\/\s*fl\s*oz)|(mg)|(ml)|(\s*fl\s*oz))/, '')
     ingredients_string.gsub!(/\d+\/\d+(\s*th)? (of|0f)?/, '')
     ingredients_string.gsub!(/\d+\s+percent/, '')
-    ingredients_string.gsub!(/(contains\s+)?(or\s+)?less\s+(than\s+)?(percent)?(of\s+)?/, '')
+    ingredients_string.gsub!(/(contains\s+)?(or\s+)?\bless\s+(than\s+)?(percent)?(of\s+)?/, '')
     ingredients_string.gsub!(' or ', ',')
     ingredients_string.gsub!(/['"]00['"]/, '00')
     ingredients_string.gsub!(/\bnos?\./, 'no')
