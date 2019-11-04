@@ -1,5 +1,5 @@
 class Nutrient < ApplicationRecord
-  has_many :nutrition_facts
+  has_many :nutrition_facts, dependent: :destroy
 
   validates_uniqueness_of :name, :case_sensitive => false
   validates_presence_of :name
