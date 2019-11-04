@@ -33,7 +33,7 @@ class NutrientsController < ApplicationController
     end
 
     def set_nutrients
-      @nutrients = Nutrient.all.sorting_ordered.search(params[:search])
+      @nutrients = Nutrient.all.search(params[:search])
       @num_records = @nutrients.count
     end
 
