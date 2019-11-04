@@ -1,6 +1,7 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter "lib/data/data_trimmer.rb"
+  add_filter "lib/data/unmatched_parens.rb"
 end
 
 ENV['RAILS_ENV'] ||= 'test'
