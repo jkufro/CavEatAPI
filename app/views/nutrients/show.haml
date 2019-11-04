@@ -31,3 +31,6 @@
     %p.lead
       %strong Limiting?:
       = @nutrient.is_limiting ? 'Yes' : 'No'
+    %p.lead
+      %strong Sorting Order:
+      = @nutrient.sorting_order || 'N/A'

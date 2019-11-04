@@ -36,6 +36,7 @@ namespace :db do
       description_col = 6
       source_col = 7
       is_limiting_col = 8
+      sorting_order_col = 9
 
       puts "Adding Nutrients to database from #{nutrient_file_path}..."
       File.open(nutrient_file_path, 'r') do |file|
@@ -50,7 +51,8 @@ namespace :db do
               description: row[description_col],
               source: row[source_col],
               unit: row[unit_col].downcase,
-              is_limiting: row[is_limiting_col] || false
+              is_limiting: row[is_limiting_col] || false,
+              sorting_order: row[sorting_order_col]
             )
           end
         end
