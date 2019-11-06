@@ -38,6 +38,6 @@ class NutrientsController < ApplicationController
     end
 
     def nutrient_params
-      params.require(:nutrient).permit(:name, :alias, :description, :source, :unit, :is_limiting)
+      params.require(:nutrient).permit(:name, :alias, :description, :source, :unit, :is_limiting, :sorting_order)
     end
 end
