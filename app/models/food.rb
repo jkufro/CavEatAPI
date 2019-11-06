@@ -1,6 +1,6 @@
 class Food < ApplicationRecord
   has_many :food_ingredients, dependent: :destroy
-  has_many :ingredients, through: :food_ingredients
+  has_many :ingredients, -> { order(is_warning: :desc, id: :asc) }, through: :food_ingredients
   has_many :nutrition_facts, dependent: :destroy
 
   validates_numericality_of :upc, only_integer: true, greater_than_or_equal_to: 0
