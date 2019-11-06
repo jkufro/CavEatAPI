@@ -15,6 +15,8 @@ class Ingredient < ApplicationRecord
     super(value&.capitalize_first_letters)
   end
 
+  scope :by_warning, -> { order(is_warning: :desc, id: :asc) }
+
   scope :alphabetical, -> { order(:name, :composition) }
 
   scope :by_name, ->(name) {

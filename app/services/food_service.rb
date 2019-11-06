@@ -8,7 +8,7 @@ class FoodService
     food = Food.new(id: 1, name: 'Unnamed Food', upc: upc || 1)
     return food if nutrition_facts_string.nil? || nutrition_facts_string.strip == ""
     return food if ingredients_string.nil? || ingredients_string.strip == ""
-    food.nutrition_facts = nutrition_facts_from_string(nutrition_facts_string)
+    food.nutrition_facts = nutrition_facts_from_string(nutrition_facts_string).sort_by { |n| n.nutrient.sorting_order }
     food.ingredients = ingredients_from_string(ingredients_string)
     return food
   end
@@ -46,7 +46,7 @@ class FoodService
       get_tentative_ingredients_from_string(ingredients_string).map {
         |t| [t.name, t.composition]
       }
-    )
+    ).by_warning
   end
 
   def self.get_tentative_ingredients_from_string(ingredients_string)
