@@ -1,3 +1,5 @@
+require 'set'
+
 class FoodService
   def self.food_from_strings(upc, nutrition_facts_string, ingredients_string, create_record=true)
     StringRequest.create(
@@ -19,6 +21,7 @@ class FoodService
     nutrition_facts_string.gsub!(/\d{1,3}%/, '')
     nutrition_facts_string.downcase!
     available_nutrients = Nutrient.all
+    used_aliases = Set.new
 
     dummy_id = 1  # required for fastjson to serialize
 
@@ -34,7 +37,11 @@ class FoodService
           amount: amount
         )
         dummy_id += 1
-        found_nutrition_facts << nutrition_fact if nutrition_fact
+        # prevent duplicate facts (e.g. two instances of 'Total Sugars') by preferring the first
+        if nutrition_fact && !used_aliases.include?(nutrition_fact.common_name)
+          used_aliases.add(nutrition_fact.common_name)
+          found_nutrition_facts << nutrition_fact
+        end
       end
     end
 
@@ -111,7 +118,8 @@ class FoodService
     new_ingredient = build_ingredient_from_string(ingredient)
     tentative_ingredients << new_ingredient if new_ingredient.name.length > 1 && /[a-zA-Z]/.match?(ingredient)
 
-    return tentative_ingredients
+    # avoid duplicate ingredients by converting to a set, then back to an array
+    return Set.new(tentative_ingredients).to_a
   end
 
   private
