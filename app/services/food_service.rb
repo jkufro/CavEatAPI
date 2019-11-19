@@ -29,7 +29,6 @@ class FoodService
     special_added_sugars = get_special_added_sugars_string(nutrition_facts_string)
     if special_added_sugars
       added_sugars = Nutrient.find_by_name('Added Sugars')
-      byebug
       amount = get_amount_from_string(special_added_sugars, 0, 'g')
       nutrition_fact = NutritionFact.new(
         id: dummy_id,
@@ -41,7 +40,7 @@ class FoodService
       used_aliases.add(added_sugars.common_name)
       found_nutrition_facts << nutrition_fact
       # remove substring from nutrition_facts_string so it isn't reused later
-      nutrition_facts_string.gsub!(/\b(incl(\.|udes?)?\s+)?*<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/, " ")
+      nutrition_facts_string.gsub!(/\b(incl(\.|udes?)?\s+)?<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/, " ")
     end
 
     available_nutrients.each do |nutrient|
@@ -144,7 +143,7 @@ class FoodService
 
   private
     def self.get_special_added_sugars_string(nutrition_facts_string)
-      return nutrition_facts_string[/\b(incl(\.|udes?)?\s+)?*<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/]
+      return nutrition_facts_string[/\b(incl(\.|udes?)?\s+)?<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/]
     end
 
     def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
