@@ -165,6 +165,7 @@ class FoodService
         ingredient_string.sub!('with ', '') while ingredient_string.start_with?('with ')
         ingredient_string.sub!('a ', '') while ingredient_string.start_with?('a ')
         ingredient_string.sub!('ingredients consist of ', '') if ingredient_string.start_with?('ingredients consist of ')
+        ingredient_string.sub!(/added\s+as\s+.*/, '')
 
         was_processed = ingredient_string != last_string
         last_string = ingredient_string.dup
