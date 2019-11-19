@@ -25,6 +25,25 @@ class FoodService
 
     dummy_id = 1  # required for fastjson to serialize
 
+    # check for special added sugars case
+    special_added_sugars = get_special_added_sugars_string(nutrition_facts_string)
+    if special_added_sugars
+      added_sugars = Nutrient.find_by_name('Added Sugars')
+      byebug
+      amount = get_amount_from_string(special_added_sugars, 0, 'g')
+      nutrition_fact = NutritionFact.new(
+        id: dummy_id,
+        # nutrient_id: added_sugars.id,
+        nutrient: added_sugars,
+        amount: amount
+      )
+      dummy_id += 1
+      used_aliases.add(added_sugars.common_name)
+      found_nutrition_facts << nutrition_fact
+      # remove substring from nutrition_facts_string so it isn't reused later
+      nutrition_facts_string.gsub!(/\b(incl(\.|udes?)?\s+)?*<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/, " ")
+    end
+
     available_nutrients.each do |nutrient|
       start_index = nutrition_facts_string.index(nutrient.name.downcase)
       if start_index
@@ -33,7 +52,8 @@ class FoodService
         next unless amount
         nutrition_fact = NutritionFact.new(
           id: dummy_id,
-          nutrient_id: nutrient.id,
+          # nutrient_id: nutrient.id,
+          nutrient: nutrient,
           amount: amount
         )
         dummy_id += 1
@@ -123,8 +143,12 @@ class FoodService
   end
 
   private
+    def self.get_special_added_sugars_string(nutrition_facts_string)
+      return nutrition_facts_string[/\b(incl(\.|udes?)?\s+)?*<?(\d+(.\d+)?)g\s+(of\s+)?added\s+sugars?\b/]
+    end
+
     def self.get_amount_from_string(nutrition_facts_string, start_index, unit)
-      nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/^\s*<?(\d+(.\d+)?)#{unit}/)&.captures&.first&.to_f
+      nutrition_facts_string.slice(start_index, nutrition_facts_string.length + 1).match(/\s*<?(\d+(\.\d+)?)#{unit}/)&.captures&.first&.to_f
     end
 
     def self.build_ingredient_from_string(ingredient_string)
