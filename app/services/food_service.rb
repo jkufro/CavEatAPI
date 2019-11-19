@@ -93,6 +93,8 @@ class FoodService
     ingredients_string.gsub!('(retains product freshness)', '')
     ingredients_string.gsub!(/\(?a natural antioxidant\)?/, '')
     ingredients_string.gsub!('to maintain freshness', '')
+    ingredients_string.gsub!(/\s+juices?\s+from\s+concentrate/, ' juice concentrate')
+    ingredients_string.gsub!(' juice concentrates', ' juice concentrate')
     ingredients_string.gsub!(/\"?\(?to preserve freshness\)?\.?"?/, '')
     ingredients_string.gsub!(/\"?\(?to preserve flavor\)?\.?"?/, '')
     ingredients_string.gsub!(/(may\s+contain\s+)?(a\s+)?trace(\s+amounts?)?(\s+of)?/, '')
