@@ -111,6 +111,7 @@ class FoodService
     ingredients_string.gsub!(/['"]00['"]/, '00')
     ingredients_string.gsub!(/\bnos?\./, 'no')
     ingredients_string.gsub!(/(?<!\w)([a-zA-Z])\./, '\\1')
+    ingredients_string.gsub!(/(?<=\bvit)\.(?=\s+\w+\b)/, '') # change 'vit. a' to 'vit a'
     ingredients_string.gsub!(/\s{2,}/, ' ')
     on_and_after_index = ingredients_string.index('ingredients:')
     ingredients_string = ingredients_string.slice(on_and_after_index, ingredients_string.length + 1) if on_and_after_index
