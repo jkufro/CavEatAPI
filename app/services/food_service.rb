@@ -167,8 +167,9 @@ class FoodService
         ingredient_string.sub!('with ', '') while ingredient_string.start_with?('with ')
         ingredient_string.sub!('a ', '') while ingredient_string.start_with?('a ')
         ingredient_string.sub!('ingredients consist of ', '') if ingredient_string.start_with?('ingredients consist of ')
-        ingredient_string.sub!(/added\s+as\s+.*/, '')
-        ingredient_string.sub!(/added\s+to\s+.*/, '')
+        ingredient_string.sub!(/\badded\s+as\s+.*/, '')
+        ingredient_string.sub!(/\bas\s+.*/, '')
+        ingredient_string.sub!(/\badded\s+to\s+.*/, '')
         ingredient_string.sub!('to prevent caking', '')
         ingredient_string.sub!(/(added\s+)?for\s+color.*/, '')
 
