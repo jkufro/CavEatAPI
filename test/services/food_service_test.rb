@@ -4,7 +4,7 @@ require 'set'
 class FoodServiceTest < ActiveSupport::TestCase
   context 'tentative ingredients' do
     should 'show that get_tentative_ingredients_from_string works' do
-      num_fixtures = 75
+      num_fixtures = 76
       strategy = 's2_solutions'
       (1..num_fixtures).each do |num|
         input_file = file_fixture("ingredient_listings/%02d.txt" % num).read
