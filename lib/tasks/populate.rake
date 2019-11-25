@@ -64,8 +64,8 @@ namespace :db do
     def get_nutrient_factor(row)
       serving_size_col = 4
       serving_size_unit_col = 5
-      if row[serving_size_unit_col] == "g"
-        return Float(row[serving_size_col]) / 100  # all nutrition facts based on 100g
+      if row[serving_size_unit_col] == "g" || row[serving_size_unit_col] == "ml"
+        return Float(row[serving_size_col]) / 100  # nutrition facts based on 100g or 100ml
       else  # could be 'g' or 'ml'
         return 1
       end
