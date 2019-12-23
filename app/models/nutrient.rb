@@ -1,5 +1,5 @@
 class Nutrient < ApplicationRecord
-  has_many :nutrition_facts
+  has_many :nutrition_facts, dependent: :destroy
 
   validates_uniqueness_of :name, :case_sensitive => false
   validates_presence_of :name
@@ -19,6 +19,9 @@ class Nutrient < ApplicationRecord
   end
 
   scope :alphabetical, -> { order(:name) }
+  scope :sorting_ordered, -> { order(:sorting_order) }
+
+  default_scope { order(:sorting_order) }
 
   scope :search, ->(search_term) {
     where("nutrients.name ILIKE ?", "%#{search_term}%")

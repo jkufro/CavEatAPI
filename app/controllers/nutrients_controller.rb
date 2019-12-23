@@ -33,11 +33,11 @@ class NutrientsController < ApplicationController
     end
 
     def set_nutrients
-      @nutrients = Nutrient.all.alphabetical.search(params[:search])
+      @nutrients = Nutrient.all.search(params[:search])
       @num_records = @nutrients.count
     end
 
     def nutrient_params
-      params.require(:nutrient).permit(:name, :alias, :description, :source, :unit, :is_limiting)
+      params.require(:nutrient).permit(:name, :alias, :description, :source, :unit, :is_limiting, :sorting_order)
     end
 end

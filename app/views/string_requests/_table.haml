@@ -1,0 +1,21 @@
+- if string_requests && string_requests.size > 0
+  %table.table.table-hover
+    %thead.thead-light
+      %tr
+        %th ID
+        %th UPC
+        %th Nutrition Facts
+        %th Ingredients
+    %tbody
+      - string_requests.each do |string_request|
+        %tr.clickable{ 'onclick': "window.location = '#{string_request_path(string_request)}'" }
+          %td
+            = link_to string_request.id, string_request_path(string_request)
+          %td
+            = string_request.upc
+          %td
+            = string_request.nutrition_facts_string.truncate(24)
+          %td
+            = string_request.ingredients_string.truncate(24)
+- else
+  %p.lead No Requests Available

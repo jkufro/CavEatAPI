@@ -1,5 +1,5 @@
 class Ingredient < ApplicationRecord
-  has_many :food_ingredients
+  has_many :food_ingredients, dependent: :destroy
   has_many :foods, through: :food_ingredients
 
   validates_uniqueness_of :name, scope: :composition, case_sensitive: false
@@ -14,6 +14,8 @@ class Ingredient < ApplicationRecord
   def composition=(value)
     super(value&.capitalize_first_letters)
   end
+
+  scope :by_warning, -> { order(is_warning: :desc, id: :asc) }
 
   scope :alphabetical, -> { order(:name, :composition) }
 

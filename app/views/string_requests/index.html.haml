@@ -1,0 +1,10 @@
+%h1 Food by String Requests
+
+= render partial: 'string_requests/actions', locals: { string_request: @string_request }
+
+%h2
+  = number_with_delimiter(@num_records, :delimiter => ',') + ' Requests'
+
+= render partial: 'string_requests/table', locals: { string_requests: @string_requests }
+
+= will_paginate @string_requests, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

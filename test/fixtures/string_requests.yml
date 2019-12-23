@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  upc: MyString
+  nutrition_facts_string: MyString
+  ingredients_string: MyString
+
+two:
+  upc: MyString
+  nutrition_facts_string: MyString
+  ingredients_string: MyString
